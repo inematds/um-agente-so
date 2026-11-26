@@ -1,0 +1,6 @@
+Rode `python3 mapa.py --md mapa.md` e leia o mapa.md.
+Quero trabalhar com UM agente principal e muitas skills, em vez de várias pastas de agente.
+1. Agrupe as pastas de agente por assunto. Para cada grupo, diga o que ele sabe que o agente principal não sabe.
+2. Proponha as skills que substituem cada grupo (nome + descrição de 1 frase, que diga QUANDO usar).
+3. Liste as regras repetidas em várias pastas que devem virar UMA linha global no CLAUDE.md principal.
+4. Não apague nem mova nada. Só me mostre o plano e espere o meu ok.

@@ -1,0 +1,6 @@
+Antes de eu instalar esta skill de terceiros: <link ou pasta>
+Leia todos os arquivos (SKILL.md, scripts, referências) e me diga, sem executar nada:
+1. O que ela faz de verdade e se a descrição bate com isso.
+2. Se algum script acessa internet, apaga arquivos, lê senhas/.env/chaves ou roda comando do sistema.
+3. Se ela repete algo que eu já tenho (rode `python3 mapa.py` para ver minhas skills).
+4. Veredito: instalar como está / adaptar (o quê) / não instalar.

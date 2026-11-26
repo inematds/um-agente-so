@@ -1,0 +1,20 @@
+{
+ "A": "com skills",
+ "B": "sem skills",
+ "rodadas": {
+  "com skills": {
+   "comando": "claude -p <tarefa> --output-format text --model claude-sonnet-5-5",
+   "segundos": 12.1,
+   "palavras": 160,
+   "codigo": 0,
+   "erro": "Warning: this sign-in ends between 2026-11-30 and 2026-12-03 (in 4 days at the earliest). Renewing it does not move those dates. Run claude auth login before then, or use claude setup-token for unattended jobs."
+  },
+  "sem skills": {
+   "comando": "claude -p <tarefa> --output-format text --disable-slash-commands --model claude-sonnet-5-5",
+   "segundos": 10.6,
+   "palavras": 112,
+   "codigo": 0,
+   "erro": "Warning: this sign-in ends between 2026-11-30 and 2026-12-03 (in 4 days at the earliest). Renewing it does not move those dates. Run claude auth login before then, or use claude setup-token for unattended jobs."
+  }
+ }
+}
