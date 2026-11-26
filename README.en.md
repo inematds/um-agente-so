@@ -12,6 +12,8 @@ One Agent Only is an open kit for people who use Claude Code (or Codex) and have
 
 Full guide (landing + step by step): **https://inematds.github.io/um-agente-so/guia/en/**
 
+🎬 Video: [Watch on YouTube](https://www.youtube.com/watch?v=s2ve490BUl8)
+
 ## Start without installing anything by hand
 
 Open Claude Code or Codex and paste:

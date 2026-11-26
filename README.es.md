@@ -12,6 +12,8 @@ Un Solo Agente es un kit abierto para quien usa Claude Code (o Codex) y fue crea
 
 Guía completa (landing + paso a paso): **https://inematds.github.io/um-agente-so/guia/es/**
 
+🎬 Video: [Ver en YouTube](https://www.youtube.com/watch?v=s2ve490BUl8)
+
 ## Empieza sin instalar nada a mano
 
 Abre Claude Code o Codex y pega:
