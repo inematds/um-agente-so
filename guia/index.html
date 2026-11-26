@@ -192,7 +192,7 @@
 <div class="card"><h3>🎤 "Não crie agentes, crie skills"</h3><p>É o nome da palestra de Barry Zhang e Mahesh Murag, da Anthropic, no AI Engineer Code Summit 2025. A tese: em vez de um agente novo por tarefa, um agente geral e uma biblioteca de skills. O que falta ao agente é especialidade, não inteligência.</p><p><a href="https://www.ai.engineer/talks/agent-skills" rel="noopener" target="_blank">Ver a palestra (em inglês)</a> · <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" rel="noopener" target="_blank">post oficial da Anthropic</a></p></div>
 <div class="card"><h3>🧾 Um padrão aberto</h3><p>A Anthropic lançou as Agent Skills em 16/10/2025. Em 18/12/2025 elas viraram padrão aberto, e em outubro de 2026 a Anthropic doou o padrão à Agentic AI Foundation, da Linux Foundation. Uma skill feita para o Claude funciona em outras ferramentas que adotaram o padrão, como o Codex, o Cursor e o GitHub Copilot.</p><p><a href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" rel="noopener" target="_blank">Anúncio da doação (em inglês)</a></p></div>
 <div class="card"><h3>✂️ Mais de 80% do prompt do sistema saiu</h3><p>Nos modelos da geração Claude 5, a Anthropic tirou mais de 80% do prompt de sistema do Claude Code (as instruções fixas que ele recebe) sem perda medida nas avaliações. O time viu que também estava "amarrando" o modelo com instruções em CLAUDE.md e skills.</p><p><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" rel="noopener" target="_blank">Ler o artigo (em inglês)</a></p></div>
-<div class="card"><h3>🧹 De tempos em tempos, teste sem nada</h3><p>Boris Cherny, criador do Claude Code, recomenda, em entrevista, apagar de tempos em tempos o CLAUDE.md, as skills e os hooks (gatilhos automáticos) e ver o que o modelo faz sem eles. O teste às cegas do kit faz isso por você, uma tarefa de cada vez, sem apagar nada.</p></div>
+<div class="card"><h3>🧹 De tempos em tempos, teste sem nada</h3><p>Boris Cherny, criador do Claude Code, recomenda, em entrevista, apagar de tempos em tempos o CLAUDE.md, as skills e os hooks (gatilhos automáticos) e ver o que o modelo faz sem eles. O teste às cegas do kit faz a parte das skills por você: roda a mesma tarefa com e sem elas, sem apagar nada. O CLAUDE.md e os hooks continuam ligados nas duas rodadas.</p></div>
 </div>
 <p class="fonte">Este kit é do INEMA, não é oficial da Anthropic. As fontes acima são públicas; os números da prova são medidos por nós.</p>
 </div></section>
@@ -249,7 +249,7 @@
 <span class="chip">Como começar</span>
 <h2>Peça para a sua IA <span class="amb">fazer o mapa com você</span></h2>
 <p class="sub">Você não instala nada à mão. A IA baixa o kit, olha as suas pastas, explica em linguagem simples e só muda algo depois do seu sim.</p>
-<div class="card" style="margin-bottom:16px"><h3>📋 Antes de começar</h3><p><strong>Você precisa de:</strong> um computador com o Claude Code ou o Codex e a assinatura de um deles. O teste às cegas usa o Claude Code.</p><p><strong>Quanto custa:</strong> o kit é grátis. O mapa não usa IA nem internet. O teste às cegas gasta duas respostas da sua assinatura do Claude por tarefa testada.</p><p><strong>Onde foi testado (26/11/2026):</strong> num computador com Linux, com o Claude Code, sobre as pastas reais do INEMA (<a href="#prova">veja a prova</a>).</p></div>
+<div class="card" style="margin-bottom:16px"><h3>📋 Antes de começar</h3><p><strong>Você precisa de:</strong> um computador com o Claude Code ou o Codex e a assinatura de um deles, e o Python 3 (se faltar, a própria IA instala). O teste às cegas usa o Claude Code.</p><p><strong>Quanto custa:</strong> o kit é grátis. O mapa não usa IA nem internet. O teste às cegas gasta duas respostas da sua assinatura do Claude por tarefa testada.</p><p><strong>Onde foi testado (26/11/2026):</strong> num computador com Linux, com o Claude Code, sobre as pastas reais do INEMA (<a href="#prova">veja a prova</a>).</p></div>
 <div class="grid g3">
 <div class="card"><h3>1. Abra a sua IA no computador</h3><p>O <strong>Claude Code</strong> ou o <strong>Codex</strong>. Abrem numa janela de texto, mas você conversa em português.</p></div>
 <div class="card"><h3>2. Cole o pedido abaixo</h3><p>Ele manda a IA ler o kit, fazer o mapa das suas pastas e dizer o que vale a pena juntar.</p></div>
@@ -284,7 +284,7 @@ Quero trabalhar com UM agente principal e muitas skills, em vez de uma pasta de 
 <div class="big">
 <div class="destaque"><b>525</b><span>pastas de agente, cada uma com as suas próprias instruções, para manter uma a uma</span></div>
 <div><b>119</b><span>skills instaladas: 61 de ferramenta, 28 de procedimento, 26 de artefato e 4 de banco</span></div>
-<div class="destaque"><b>73</b><span>pastas com a mesma regra copiada (entre 65 e 73, conforme a regra). Devia ser uma linha só</span></div>
+<div class="destaque"><b>73</b><span>pastas com a mesma regra copiada (a mais repetida; outras aparecem em 65). Devia ser uma linha só</span></div>
 <div><b>51</b><span>skills com a descrição curta demais. É pela descrição que o agente decide abrir a skill</span></div>
 </div>
 <h3 style="margin-top:34px;font-size:1.25rem">O teste às cegas: a mesma tarefa, com e sem skills</h3>
