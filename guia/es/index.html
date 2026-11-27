@@ -1,264 +1,577 @@
 <!DOCTYPE html>
+<!--
+  Guide (ES) of the "Um Agente Só" kit, guide standard v2 (27/11/2026). PT at ../, numbers = exemplos/prova-real.md (26/11/2026).
+-->
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Un Solo Agente: un agente general y muchas skills, en lugar de un agente por tarea</title>
-<meta content="Creaste un agente para cada tarea y ahora cuidas de todos. Un Solo Agente es un kit gratis que muestra cuántos agentes tienes ya, qué se repite entre ellos y prueba a ciegas si tus skills todavía ayudan." name="description"/>
-<meta content="Un Solo Agente: un agente general y muchas skills" property="og:title"/>
-<meta content="Anthropic recomienda un agente general y muchas skills. El kit muestra cómo llegar ahí, sin borrar nada. Gratis en inema.club." property="og:description"/>
-<meta content="https://inematds.github.io/um-agente-so/guia/assets/banner-es.jpg" property="og:image"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un Solo Agente — enseñas una vez, el agente lo guarda en una skill</title>
+<meta name="description" content="Kit gratis de INEMA para quien usa Claude Code o Codex y creó un agente por tarea. Cuenta tus agentes, convierte cada tarea en skill y prueba a ciegas si la skill todavía ayuda. Un agente general y muchas skills, como recomienda Anthropic.">
+<meta property="og:title" content="Un Solo Agente — un agente general y muchas skills">
+<meta property="og:description" content="Enseñas una vez. El agente lo guarda en una skill. Toda tarea lo aprovecha. Kit gratis en inema.club, directo en internet.">
+<meta property="og:image" content="https://inematds.github.io/um-agente-so/guia/assets/banner-es.jpg">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/um-agente-so/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/um-agente-so/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/um-agente-so/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
-    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
-    --fill:#FACC15; --tint:rgba(250,204,21,.12); --ok:#7CE0C6; --bad:#F0918A;
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730; --dash:#4b4b5a;
+    --txt:#e9e9ee; --mut:#9a9aa6;
+    --fill:#FACC15; --tinta:#1a1206; --amb-t:#FACC15; --amb:#FACC15;
+    --link:#FACC15; --foco:#FACC15; --dica:#16161e; --dica-b:#FACC15;
+    --sky:#38bdf8; --pro:#cbd5e1; --bad:#F0918A; --nd:#1b1b24; --ndon:#2a2410;
     color-scheme:dark;
   }
   body.light{
-    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
-    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
-    --fill:#FACC15; --tint:#FEF9C3; --ok:#0E6B55; --bad:#A83426;
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea; --dash:#b4b7c4;
+    --txt:#1a1a22; --mut:#5b5b68; --amb-t:#1a1a22; --amb:#a16207;
+    --link:#854d0e; --foco:#1a1a22; --dica:#FEF9C3; --dica-b:#EAB308;
+    --sky:#0369a1; --pro:#b45309; --bad:#A83426; --nd:#ffffff; --ndon:#FEF9C3;
     color-scheme:light;
   }
-  body.light .hero .glow{opacity:.5}
-  body.light pre{background:#0e0e14;color:#d6d6e0}
-  body.light nav{background:rgba(246,247,249,.85)}
-  body.light .amb{color:var(--txt);background:linear-gradient(transparent 55%,#FACC15 55%)}
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
-  a{color:var(--amb);text-decoration:none}
-  body.light main a:not(.btn),body.light footer a{color:#854d0e;text-decoration:underline;text-decoration-color:#FACC15;text-decoration-thickness:3px}
-  code,pre{font-family:"JetBrains Mono",monospace}
-  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
-  .mut{color:var(--mut)} .amb{color:var(--amb)}
-  .chip{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
-  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
-  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
-  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
-  nav .brand .emoji{font-size:1.25rem}
-  nav .sep{color:var(--mut);opacity:.45}
-  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
-  nav .inema:hover{filter:brightness(1.15)}
-  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
-  nav .pro:hover{filter:brightness(1.15)}
-  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
-  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
-  nav .links a.sec{color:var(--mut);white-space:nowrap} nav .links a.sec:hover{color:var(--txt)}
-  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
-  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:var(--tint)}
-  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
-  .tgl:hover{border-color:var(--amb)}
-  .btn{display:inline-block;background:var(--fill);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora;border:0;cursor:pointer;font-size:1rem}
-  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
-  @media(max-width:1360px){nav .links a.opt{display:none}}
-  @media(max-width:860px){nav .links a.sec{display:none}}
-  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
-  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
-  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
-  .hero .wrap{display:grid;padding:74px 22px}
-  .hero h1{font-size:clamp(2rem,4.4vw,3.1rem);font-weight:800;letter-spacing:-.025em}
-  .hero p.lead{font-size:1.12rem;color:var(--mut);margin:0 0 1.6em;max-width:48ch}
-  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
-  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
-  .hero figure img{width:100%;height:auto;display:block}
-  .hero .wrap.hero2{grid-template-columns:1.05fr .95fr;grid-template-areas:"top f2" "bot f1";column-gap:40px;row-gap:28px;align-items:center}
-  .hero2 .h-top{grid-area:top}.hero2 .h-bot{grid-area:bot}.hero2 .f1{grid-area:f1}.hero2 .f2{grid-area:f2}
-  .hero2 .chip{margin-bottom:14px}
-  @media(max-width:780px){.hero .wrap.hero2{grid-template-columns:1fr;grid-template-areas:"top" "f2" "bot" "f1";padding:44px 22px}}
-  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
-  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
-  section{padding:62px 0;border-bottom:1px solid var(--line)}
-  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
-  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:66ch}
-  .grid{display:grid;gap:16px}
-  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
-  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
-  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
-  .card h3{font-size:1.05rem;margin-bottom:.4em}
-  .card p{color:var(--mut);font-size:.95rem;margin:0}
-  .card p+p{margin-top:.6em}
-  .card .num{font:800 1.5rem Sora,sans-serif;color:var(--amb);margin-bottom:.3em}
-  body.light .card .num{color:var(--txt)}
-  .quem-img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;margin:0 0 14px;display:block;border:1px solid var(--line)}
-  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 22px}
-  .flow span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.9rem;font-family:Sora;font-weight:600}
-  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
-  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;margin:.4em 0 0}
-  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
-  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
-  .fonte{font-size:.86rem;color:var(--mut);margin-top:14px;max-width:80ch}
-  /* analogia */
-  .pc{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:16px}
-  .pc div{padding:22px;background:var(--card);border-right:1px solid var(--line)}
-  .pc div:last-child{border-right:0}
-  .pc .e{font-size:2rem;display:block;margin-bottom:.2em}
-  .pc b{display:block;font-family:Sora;font-size:1.1rem}
-  .pc i{display:block;font-style:normal;color:var(--amb);font-family:Sora;font-weight:600;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;margin:.2em 0 .5em}
-  body.light .pc i{color:#854d0e}
-  .pc p{color:var(--mut);font-size:.94rem;margin:0}
-  @media(max-width:720px){.pc{grid-template-columns:1fr}.pc div{border-right:0;border-bottom:1px solid var(--line)}.pc div:last-child{border-bottom:0}}
-  /* prova */
-  .big{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:8px 0 22px}
-  @media(max-width:860px){.big{grid-template-columns:1fr 1fr}}
-  @media(max-width:420px){.big{grid-template-columns:1fr}}
-  .big div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
-  .big b{display:block;font:800 clamp(2.4rem,6vw,3.6rem)/1 Sora,sans-serif;letter-spacing:-.03em;color:var(--amb)}
-  body.light .big b{color:var(--txt);text-decoration:underline;text-decoration-color:#FACC15;text-decoration-thickness:8px;text-underline-offset:-2px}
-  .big span{display:block;color:var(--mut);font-size:.93rem;margin-top:.6em}
-  .big .destaque{border-color:var(--amb)}
-  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);margin-top:12px}
-  .tbl{width:100%;border-collapse:collapse;font-size:.95rem}
-  .tbl th,.tbl td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  .tbl tr:last-child td{border-bottom:0}
-  .tbl th{font-family:Sora;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
-  .tbl td:first-child{color:var(--mut)}
-  .tbl .ok{color:var(--ok);font-weight:600} .tbl .bad{color:var(--bad);font-weight:600}
-  @media(max-width:600px){.tbl thead{display:none} .tbl tr{display:block;border-bottom:1px solid var(--line);padding:6px 0} .tbl tr:last-child{border-bottom:none} .tbl td{display:block;border:none;padding:4px 14px} .tbl td[data-l]::before{content:attr(data-l) ": ";color:var(--mut);font-size:.85rem}}
-  .veredito{margin-top:16px;background:var(--card);border:1px solid var(--amb);border-left:4px solid var(--fill);border-radius:12px;padding:16px 18px}
-  .veredito p{margin:0}
-  .video-player{display:block;width:100%;max-width:820px;height:auto;aspect-ratio:16/9;border:0;border-radius:16px;background:var(--bg2);margin-top:18px}
-</style>
-<link href="https://inematds.github.io/um-agente-so/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/um-agente-so/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/um-agente-so/guia/es/" hreflang="es" rel="alternate"/></head>
-<body>
-<nav><div class="wrap">
-<a class="brand" href="#top"><span class="emoji">🧩</span> Un Solo Agente</a>
-<span class="sep">|</span>
-<span class="clubpro">
-<a class="inema" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
-<span class="sep">-</span>
-<a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
-</span>
-<div class="links">
-<a class="sec" href="#explicado">Lo que ganas</a>
-<a class="sec opt" href="#dia">En tu día</a>
-<a class="sec opt" href="#como">Cómo funciona</a>
-<a class="sec" href="#comecar">Cómo empezar</a>
-<a class="sec opt" href="#base">Base (Anthropic)</a>
-<a class="sec" href="#prova">La prueba</a>
-<span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
-<button aria-label="Cambiar tema" class="tgl" id="themeToggle" title="Cambiar tema">🌙</button>
-<a class="btn" href="https://github.com/inematds/um-agente-so" rel="noopener" target="_blank">GitHub</a>
-</div>
-</div></nav>
+  html{-webkit-text-size-adjust:100%}
+  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+  body{margin:0;background:var(--bg);color:var(--txt);font:400 17px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:Sora,system-ui,sans-serif;margin:0;line-height:1.12;letter-spacing:-.02em}
+  p{margin:0}
+  a{color:var(--link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  body.light a{text-decoration-color:#FACC15;text-decoration-thickness:3px}
+  :focus-visible{outline:2px solid var(--foco);outline-offset:3px;border-radius:4px}
+  svg{flex:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .col{max-width:760px}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-<header class="hero" id="top">
-<div class="glow"></div>
-<div class="wrap hero2">
-<div class="h-top"><span class="chip">Kit gratis · basado en la recomendación de Anthropic</span>
-<h1>Creaste un agente para cada tarea y ahora cuidas de todos. Con <span class="amb">Un Solo Agente</span>, un agente y muchas skills hacen ese trabajo</h1></div>
-<figure class="f1"><img alt="Un solo robot asistente frente a una estantería llena de cápsulas de luz, tomando la que necesita" src="../assets/hero.jpg"/></figure>
-<div class="h-bot"><p class="lead">Una carpeta para ventas, otra para soporte, otra para contenido. Cada una con sus reglas, que corriges una por una, y la misma regla copiada en decenas de ellas. Anthropic, que hace Claude, recomienda lo contrario: un agente general que aprende cada tarea con una skill. Este kit muestra dónde estás hoy y cómo llegar ahí, sin borrar nada.</p>
-<div class="cta">
-<a class="btn" href="#explicado">Lo que ganas</a>
-<a class="btn ghost" href="#comecar">Cómo empezar</a>
+  /* barra do topo */
+  .topo{border-bottom:1px solid var(--line)}
+  .topo .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;min-height:48px}
+  .topo a{text-decoration:none;font:600 .875rem Sora,sans-serif}
+  .marca{display:inline-flex;align-items:center;gap:7px}
+  .marca .inema{color:var(--sky)} .marca .pro{color:var(--pro)} .marca .sep{color:var(--mut);opacity:.6}
+  .menu{display:flex;gap:4px 18px;flex-wrap:wrap}
+  .menu a{color:var(--mut);font-weight:600}
+  .menu a:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px}
+  .lang a{color:var(--mut);padding:.35em .55em;border-radius:6px}
+  .lang a.on{color:var(--txt);background:var(--bg2)}
+
+  /* TOPO 2×2: o teste dos 5 segundos */
+  .hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);grid-template-areas:"top f2" "bot f1";column-gap:44px;row-gap:24px;align-items:start;padding-top:28px;padding-bottom:44px}
+  .h-top{grid-area:top}.h-bot{grid-area:bot;align-self:start}
+  .hero h1{letter-spacing:-.03em}
+  .marcao{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;margin-bottom:14px}
+  .marcao .forte{font:800 clamp(1.8rem,3.6vw,2.5rem)/1 Sora,sans-serif;letter-spacing:-.01em;text-transform:uppercase;color:var(--txt)}
+  .marcao .forte b{font-weight:800;color:var(--amb-t)}
+  body.light .marcao .forte b{background:linear-gradient(transparent 55%,#FACC15 55%);padding:0 .1em}
+  .marcao .esp{font:800 clamp(.85rem,1.3vw,.95rem)/1.1 Sora,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+  .manchete{display:block;font-size:clamp(1.9rem,3.4vw,2.45rem);font-weight:800;line-height:1.06}
+  .manchete .l{display:block;text-wrap:balance}
+  .manchete em{font-style:normal;color:var(--amb-t)}
+  body.light .manchete em{background:linear-gradient(transparent 62%,#FACC15 62%)}
+  .lead{font-size:clamp(1.04rem,1.4vw,1.14rem);line-height:1.55;margin-top:16px;max-width:36em}
+  .cta{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55em;min-height:50px;padding:.7em 1.3em;border-radius:10px;border:1px solid var(--fill);background:var(--fill);color:var(--tinta);font:800 1rem Sora,sans-serif;text-decoration:none;cursor:pointer}
+  body.light a.btn{text-decoration:none}
+  .btn svg{width:18px;height:18px}
+  .btn.ghost{background:transparent;color:var(--txt);border-color:var(--line);font-weight:600}
+  .btn:hover{filter:brightness(1.07)} .btn.ghost:hover{border-color:var(--mut);filter:none}
+  .fatos{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:8px;font-size:.97rem}
+  .fatos li{display:flex;gap:10px;align-items:flex-start}
+  .fatos svg{width:18px;height:18px;margin-top:.22em}
+  .hero .f1,.hero .f2{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero .f2{grid-area:f2;align-self:center}.hero .f1{grid-area:f1;align-self:start}
+  .hero .f1 img,.hero .f2 img{display:block;width:100%;height:auto}
+  .hero .f1 img{aspect-ratio:16/9;object-fit:cover}
+
+  /* seções */
+  section{padding:68px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;text-wrap:balance}
+  .sub{color:var(--mut);margin-top:12px;max-width:40em}
+  .kicker{font:800 clamp(1.35rem,2.6vw,1.75rem)/1.1 Sora,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--amb-t);margin-bottom:14px;padding-bottom:12px;border-bottom:3px solid var(--fill);display:inline-block}
+  .frase{font-size:clamp(1.1rem,1.6vw,1.25rem);line-height:1.6}
+  .tres-j{margin:16px 0;padding-left:1.2em;display:grid;gap:8px;font-size:1.05rem}
+  .tres-j b{color:var(--amb-t)}
+  .mut{color:var(--mut);font-size:.97rem}
+  .largo{margin:28px 0 0;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+  .largo img{display:block;width:100%;height:auto}
+  .largo.m{max-width:760px}
+  .largo.topo-sec{margin:0}
+  .risco{border:0;border-top:1px solid var(--line);margin:44px 0 40px}
+
+  /* para quem */
+  .publicos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+  .pub{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+  .pub img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+  .pub h3{font-size:1.15rem;font-weight:800;margin:16px 18px 8px}
+  .pub p{margin:0 18px;color:var(--mut);font-size:.97rem}
+  .pub .usa{margin:auto 18px 18px;padding-top:12px;color:var(--txt);font-size:.9rem}
+  .pub .usa b{color:var(--amb-t)}
+
+  /* passos: um abaixo do outro, mesma forma */
+  .passos{margin-top:34px;display:grid;gap:16px;grid-template-columns:1fr;max-width:860px}
+  .passo{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .passo header{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .n{flex:none;width:46px;height:46px;border-radius:12px;background:var(--fill);color:var(--tinta);font:800 1.4rem/46px Sora,sans-serif;text-align:center}
+  .passo h3{font-size:clamp(1.2rem,2.2vw,1.45rem);font-weight:800}
+  .quem{display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px;align-items:start;padding:11px 0;border-top:1px solid var(--line)}
+  .tag{display:inline-block;justify-self:start;margin-top:.15em;font:600 .75rem/1 Sora,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:.5em .65em;border-radius:6px;border:1px solid var(--dash);color:var(--txt);white-space:nowrap}
+  .tag.prog{background:var(--fill);border-color:var(--fill);color:var(--tinta)}
+  .tag.ia{background:var(--txt);border-color:var(--txt);color:var(--bg)}
+  .porque{border-top:1px solid var(--line);padding-top:12px;color:var(--mut);font-size:.97rem}
+  .porque span{font:600 .75rem Sora,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--txt);margin-right:.6em}
+
+  /* as partes: faixa própria, animação à esquerda */
+  .jeitos-l{display:grid;gap:40px;margin-top:32px}
+  .jeito-l{display:grid;grid-template-columns:340px minmax(0,1fr);gap:32px;align-items:start;padding-bottom:40px;border-bottom:1px solid var(--line)}
+  .jl-txt{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .jl-txt .num{font:600 .8rem Sora,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+  .jl-txt h3{font-size:1.5rem;font-weight:800}
+  .jl-txt .bom{font-weight:600}
+  .jl-txt .origem{color:var(--mut);font-size:.9rem}
+  .analogia{background:var(--dica);border:1px solid var(--line);border-left:4px solid var(--dica-b);border-radius:10px;padding:14px 18px;max-width:52em}
+  .analogia b{font-family:Sora,sans-serif;font-weight:600}
+  .questao .analogia{margin-top:22px}
+  .chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  .chips li{font:600 .78rem Inter,sans-serif;padding:.35em .6em;border-radius:6px;border:1px solid var(--dash);color:var(--txt)}
+  .tabela-wrap{overflow-x:auto;margin-top:48px;border:1px solid var(--line);border-radius:14px}
+  .tabela{border-collapse:collapse;width:100%;min-width:620px;font-size:.95rem}
+  .tabela th,.tabela td{padding:12px 14px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+  .tabela thead th{border-top:none;font:800 .95rem Sora,sans-serif;background:var(--bg2)}
+  .tabela tbody th{font-weight:600;color:var(--mut);white-space:nowrap}
+
+  /* diagramas animados */
+  .diag{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:14px 10px 6px}
+  .diag svg{width:100%;height:auto;display:block}
+  .diag .ctl{display:flex;justify-content:space-between;align-items:center;padding:4px 8px 8px;font:600 .78rem Sora,sans-serif;color:var(--mut)}
+  .diag .ctl button{background:transparent;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:.25em .7em;font:600 .78rem Sora,sans-serif;cursor:pointer;min-height:32px}
+  .nd rect{fill:var(--nd);stroke:var(--line);stroke-width:1.5;transition:fill .35s,stroke .35s}
+  .nd.on rect{fill:var(--ndon);stroke:var(--amb)}
+  .nd.wait rect{stroke:var(--amb);stroke-dasharray:6 5}
+  .nd .t{font:700 15px Sora,sans-serif;fill:var(--txt)}
+  .nd .s{font:400 12.5px Inter,sans-serif;fill:var(--mut)}
+  .lnk{stroke:var(--mut);stroke-width:2;opacity:.45;stroke-dasharray:3 5}
+  .lb{font:600 11.5px Sora,sans-serif;fill:var(--mut)}
+  .ping{font:700 12px Sora,sans-serif;fill:var(--amb)}
+  body.light .ping{fill:#854d0e}
+  .tok{fill:var(--amb)} body.light .tok{fill:#EAB308}
+  .ring{fill:none;stroke:var(--amb);stroke-width:2;opacity:0}
+
+  /* questões importantes */
+  .questao{margin-top:36px;padding-top:28px;border-top:1px dashed var(--line)}
+  .questao:first-of-type{border-top:none;padding-top:0}
+  .q-tit{display:flex;align-items:center;gap:14px;font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:800}
+  .q-tit span{flex:none;width:42px;height:42px;border-radius:12px;background:var(--fill);color:var(--tinta);display:grid;place-items:center;font-size:1.2rem}
+  .duas{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
+  .bloco{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0}
+  .bloco h3{font-size:1.15rem;font-weight:800;margin-bottom:8px}
+  .bloco p + p{margin-top:12px}
+  .medido{border-left:3px solid var(--fill);padding-left:12px;font-weight:500}
+  .lista{list-style:none;margin:0;padding:0}
+  .lista li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+  .lista li:first-child{border-top:none}
+  .lista svg{width:18px;height:18px;margin-top:.28em;color:var(--mut)}
+  .lista.sim svg{color:var(--txt)}
+  .lista strong{font-weight:600;display:block}
+  .lista span{color:var(--mut);font-size:.97rem}
+
+  /* na prática */
+  .tres{list-style:none;counter-reset:c;margin:28px 0 0;padding:0;display:grid;gap:12px}
+  .tres li{counter-increment:c;display:grid;grid-template-columns:34px minmax(0,1fr);gap:14px;align-items:start}
+  .tres li::before{content:counter(c);width:34px;height:34px;border-radius:10px;border:1px solid var(--dash);font:800 1rem/32px Sora,sans-serif;text-align:center}
+  .tres p{padding-top:.2em}
+  .pedido{margin-top:26px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+  .pedido-barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:12px 14px 12px 18px;border-bottom:1px solid var(--line)}
+  .pedido-barra p{font-size:.95rem;color:var(--mut)}
+  .pedido-barra .btn{min-height:44px;padding:.5em 1.05em}
+  .pedido pre{margin:0;padding:18px;font:400 .9rem/1.65 ui-monospace,"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--txt)}
+  .cartoes3{display:grid;grid-template-columns:1fr;gap:12px;margin-top:22px}
+  .cartoes3 h3{font-size:1.05rem;margin-bottom:6px}
+
+  /* vídeo 16:9 */
+  .video-box{margin-top:26px;max-width:860px;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg2)}
+  .video-box iframe{display:block;width:100%;height:100%;border:0}
+  .fonte{margin-top:12px;font-size:.95rem}
+
+  /* medido */
+  .numeros{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:26px}
+  .numero{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:8px}
+  .numero b{font:800 2.2rem/1 Sora,sans-serif;color:var(--amb-t)}
+  .numero span{color:var(--mut);font-size:.93rem}
+  .ab-tit{margin-top:44px;font-size:1.3rem;font-weight:800}
+  #prova .tabela-wrap{margin-top:18px}
+  #prova .sub{max-width:52em}
+
+  /* perguntas */
+  .faq{margin-top:26px;border-top:1px solid var(--line)}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 2px;font:600 1.05rem/1.35 Sora,sans-serif}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";flex:none;font:400 1.5rem/1 Inter,sans-serif;color:var(--mut)}
+  .faq details[open] summary::after{content:"\2212"}
+  .faq details p{padding:0 2px 18px;color:var(--mut);max-width:42em}
+
+  /* fecho */
+  .fecho{text-align:center}
+  .fecho h2{max-width:20em;margin:0 auto}
+  .fecho p{margin:16px auto 0;max-width:30em;font-size:1.1rem}
+  .fecho .cta{justify-content:center;margin-top:22px}
+
+  footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--mut);font-size:.9rem}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between}
+  footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+  footer a{color:var(--mut)}
+  footer a.inema{color:var(--sky)}
+  .tema{background:transparent;border:1px solid var(--line);color:var(--mut);border-radius:10px;min-height:40px;padding:.4em .9em;font:600 .875rem Sora,sans-serif;cursor:pointer}
+
+  @media (max-width:900px){
+    .hero .wrap{grid-template-columns:1fr;grid-template-areas:"top" "bot" "f2" "f1";gap:28px;padding-top:30px;padding-bottom:44px}
+    .hero .f1 img{aspect-ratio:3/2}
+    .publicos{grid-template-columns:1fr}
+    .jeito-l{grid-template-columns:1fr}
+    .jl-diag{max-width:380px;width:100%;margin:0 auto}
+    .duas{grid-template-columns:1fr}
+    .numeros{grid-template-columns:1fr 1fr}
+    .menu{display:none}
+    section{padding:52px 0}
+  }
+  @media (max-width:640px){
+    .tabela-wrap{position:relative;background:linear-gradient(to left,rgba(250,204,21,.18),transparent 28px) right/28px 100% no-repeat}
+    .tabela-wrap::before{content:"\2194";position:sticky;left:0;display:block;text-align:right;padding:6px 10px 0;color:var(--amb-t);font:700 1rem Sora,sans-serif}
+  }
+  @media (max-width:480px){
+    .wrap{padding:0 16px}
+    .cta .btn{flex:1 1 auto}
+    .passo,.bloco{padding:18px}
+    .quem{grid-template-columns:1fr;gap:7px}
+    .tag{margin-top:0}
+    .n{width:40px;height:40px;line-height:40px;font-size:1.2rem}
+    .numeros{grid-template-columns:1fr}
+    .pedido-barra .btn{width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="topo"><div class="wrap">
+  <span class="marca">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep" aria-hidden="true">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <nav class="menu" aria-label="Secciones">
+    <a href="#jeitos">3 partes</a><a href="#importantes">Dudas</a><a href="#comecar">En la práctica</a><a href="#video">Video</a><a href="#prova">Medido</a>
+  </nav>
+  <span class="lang" aria-label="Idioma">
+    <a href="../" hreflang="pt-BR">PT</a>
+    <a href="../en/" hreflang="en">EN</a>
+    <a class="on" href="./" aria-current="true" hreflang="es">ES</a>
+  </span>
 </div></div>
-<figure class="f2"><img alt="Un Solo Agente: deja de crear un agente por tarea. Un agente general y muchas skills" src="../assets/banner-es.jpg"/></figure>
-</div>
-</header>
+
+<!-- ========== TOPO 2×2 ========== -->
+<header class="hero" id="top"><div class="wrap">
+  <div class="h-top">
+    <h1>
+      <span class="marcao"><span class="forte">Un <b>Solo Agente</b></span> <span class="esp">un agente + muchas skills</span></span><span class="vh">: </span>
+      <span class="manchete"><span class="l">Enseñas una vez.</span> <span class="l">El agente lo guarda en la skill.</span> <span class="l"><em>Cada tarea lo aprovecha.</em></span></span>
+    </h1>
+    <p class="lead">Creaste un agente para cada tarea y ahora corriges la misma regla en todos. Pega un pedido en tu IA: el kit cuenta tus agentes, convierte cada tarea en skill y prueba a ciegas si todavía ayuda. Al final, un solo agente, que aprende de una vez.</p>
+  </div>
+  <figure class="f2"><img src="../assets/banner-es.jpg" alt="Un Solo Agente: deja de crear un agente por tarea. Un agente general y muchas skills, como recomienda Anthropic" width="1400" height="788"></figure>
+  <div class="h-bot">
+    <div class="cta">
+      <a class="btn" href="#comecar">Copiar el pedido y empezar
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+      <a class="btn ghost" href="#video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>Ver el video</a>
+    </div>
+    <ul class="fatos">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Kit gratis y abierto. Sin programar: pegas un pedido, y nada cambia sin tu sí.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Necesitas Claude Code o Codex y la suscripción de uno de ellos.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Medido en nuestra máquina: 525 carpetas de agente y la misma regla copiada en hasta 73 de ellas.</span></li>
+    </ul>
+  </div>
+  <figure class="f1"><img src="../assets/hero.jpg" alt="Un robot elige un frasco en un estante lleno de frascos iluminados, como un agente que abre la skill correcta" width="1200" height="800"></figure>
+</div></header>
 
 <main>
-<section class="resumo" id="resumo"><div class="wrap">
-<span class="chip">En una frase</span>
-<p><strong>Tener un agente para cada tarea parece ordenado, pero a cada uno hay que enseñarle y corregirle por separado.</strong> Un Solo Agente es un kit gratuito para quien usa Claude Code o Codex (asistentes de IA que trabajan dentro de tu computadora). Sigue la recomendación de los ingenieros de Anthropic: <strong>un agente general y muchas skills</strong>. Una skill es una carpeta con instrucciones para una tarea, que el agente abre solo cuando la necesita. El kit cuenta cuántos "agentes" has creado ya, encuentra las reglas repetidas entre ellos, trae modelos de skill y prueba, a ciegas, si una skill todavía ayuda. Para usarlo, basta con pedírselo a tu IA, y nada cambia sin tu sí.</p>
-</div></section>
 
-<section id="explicado"><div class="wrap">
-<span class="chip">Lo que ganas</span>
-<h2>Un agente al que enseñas <span class="amb">una sola vez</span></h2>
-<p class="sub">Qué cambia entre mantener una carpeta de agente por tarea y tener un agente principal con skills.</p>
-<div class="grid g2">
-<div class="card"><h3>😩 Antes</h3><p>Cada tarea tuvo su propio agente, con sus reglas y su memoria. Cuando aprendes algo nuevo, tienes que contárselo a cada uno. La misma regra ("cuando te corrija, guarda la lección") está copiada en decenas de carpetas, y una dice una cosa mientras otra dice otra.</p></div>
-<div class="card"><h3>😌 Después</h3><p>Un agente principal lo hace todo. Lo que necesita saber de cada tarea está en una skill, que abre solo cuando el pedido lo exige. La regla que vale para todo está en un solo lugar. Para hacer algo nuevo, añades una skill, y no creas otro agente.</p></div>
-</div>
-<div class="grid g3" style="margin-top:16px">
-<div class="card"><div class="num">1</div><h3>Ves el tamaño del desorden</h3><p>El kit cuenta tus carpetas de agente y tus skills y muestra las reglas repetidas. Solo lee; no cambia nada.</p></div>
-<div class="card"><div class="num">2</div><h3>Un plan para unir, sin borrar</h3><p>Tu IA agrupa los agentes por tema y propone las skills que quedan en su lugar. Tú apruebas antes de cualquier cambio.</p></div>
-<div class="card"><div class="num">3</div><h3>Descubres si la skill todavía ayuda</h3><p>La misma tarea se ejecuta con y sin tus skills, sin que sepas cuál es cuál. Eliges la mejor y solo después ves cuál era cuál.</p></div>
-</div>
-</div></section>
+<!-- ========== EM UMA FRASE ========== -->
+<section id="resumo"><div class="wrap"><div class="col">
+  <p class="kicker">En una frase</p>
+  <p class="frase"><strong>Quieres corregir a la IA una vez y ver que la corrección vale en todas las tareas.</strong> Anthropic, que hace Claude, recomienda un agente general y muchas skills: el modelo es el procesador, el agente es el sistema operativo y las skills son las aplicaciones. Una skill es una carpeta con instrucciones para una tarea, que el agente abre solo cuando la necesita. Este kit gratuito hace el cambio en tres partes:</p>
+  <ul class="tres-j">
+    <li><b>cuenta tus agentes</b>: el mapa muestra cuántos creaste y qué se repite;</li>
+    <li><b>hazlo una vez, conviértelo en skill</b>: la tarea que salió bien se convierte en skill, con cuatro modelos;</li>
+    <li><b>prueba sin skills</b>: la misma tarea, con y sin ellas, a ciegas.</li>
+  </ul>
+  <p class="mut">Sirve para Claude Code y Codex. El mapa solo lee; nada cambia sin tu sí.</p>
+</div></div></section>
 
-<section id="base"><div class="wrap">
-<span class="chip">De dónde viene</span>
-<h2>La recomendación es de la <span class="amb">propia Anthropic</span></h2>
-<p class="sub">El kit no inventó la idea. Viene de quienes hacen Claude y Claude Code.</p>
-<div class="grid g2">
-<div class="card"><h3>🎤 "No crees agentes, crea skills"</h3><p>Es el nombre de la charla de Barry Zhang y Mahesh Murag, de Anthropic, en el AI Engineer Code Summit 2025. La tesis: en lugar de un agente nuevo por tarea, un agente general y una biblioteca de skills. Lo que le falta al agente es especialidad, no inteligencia.</p><p><a href="https://www.ai.engineer/talks/agent-skills" rel="noopener" target="_blank">Ver la charla (en inglés)</a> · <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" rel="noopener" target="_blank">publicación oficial de Anthropic</a></p></div>
-<div class="card"><h3>🧾 Un estándar abierto</h3><p>Anthropic lanzó las Agent Skills el 16/10/2025. El 18/12/2025 pasaron a ser un estándar abierto, y en octubre de 2026 Anthropic donó el estándar a la Agentic AI Foundation, de la Linux Foundation. Una skill hecha para Claude funciona en otras herramientas que adoptaron el estándar, como Codex, Cursor y GitHub Copilot.</p><p><a href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" rel="noopener" target="_blank">Anuncio de la donación (en inglés)</a></p></div>
-<div class="card"><h3>✂️ Salió más del 80% del prompt del sistema</h3><p>En los modelos de la generación Claude 5, Anthropic quitó más del 80% del prompt de sistema de Claude Code (las instrucciones fijas que recibe) sin pérdida medida en las evaluaciones. El equipo vio que también estaba "atando" al modelo con instrucciones en CLAUDE.md y skills.</p><p><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" rel="noopener" target="_blank">Leer el artículo (en inglés)</a></p></div>
-<div class="card"><h3>🧹 De vez en cuando, prueba sin nada</h3><p>Boris Cherny, creador de Claude Code, recomienda, en una entrevista, borrar de vez en cuando el CLAUDE.md, las skills y los hooks (disparadores automáticos) y ver qué hace el modelo sin ellos. La prueba a ciegas del kit hace la parte de las skills por ti: ejecuta la misma tarea con y sin ellas, sin borrar nada. El CLAUDE.md y los hooks siguen activos en las dos rondas.</p></div>
-</div>
-<p class="fonte">Este kit es de INEMA, no es oficial de Anthropic. Las fuentes de arriba son públicas; los números de la prueba los medimos nosotros.</p>
-</div></section>
-
+<!-- ========== PARA QUEM ========== -->
 <section id="quem"><div class="wrap">
-<span class="chip">Para quién</span>
-<h2>Lo que <span class="amb">gana cada uno</span></h2>
-<div class="grid g3">
-<div class="card"><img alt="Persona de noche frente a un monitor con decenas de ventanas y carpetas apiladas" class="quem-img" loading="lazy" src="../assets/quem-muitos.jpg"/><h3>📂 Quien ya creó muchos agentes</h3><p><strong>Gana:</strong> el mapa de lo que tiene, las reglas repetidas y un plan para unir todo en un agente principal.</p><p><strong>Y además:</strong> menos lugares que corregir cuando algo cambia.</p></div>
-<div class="card"><img alt="Dueña de una pequeña tienda sonriendo detrás del mostrador con una laptop abierta" class="quem-img" loading="lazy" src="../assets/quem-negocio.jpg"/><h3>🏪 Quien usa la IA en su negocio</h3><p><strong>Gana:</strong> ventas, atención y publicaciones en un solo asistente, con una skill para cada tarea y una para tus datos de clientes.</p><p><strong>Y además:</strong> los modelos de skill listos para copiar.</p></div>
-<div class="card"><img alt="Persona en casa abriendo la laptop para usar un asistente de IA por primera vez" class="quem-img" loading="lazy" src="../assets/quem-comecando.jpg"/><h3>🌱 Quien está empezando</h3><p><strong>Gana:</strong> la forma correcta desde el primer día: un agente, y cada tarea nueva se convierte en una skill.</p><p><strong>Y además:</strong> el pedido que convierte en skill una tarea hecha una vez.</p></div>
-</div>
+  <p class="kicker">Para quién</p>
+  <h2>Es para ti si…</h2>
+  <div class="publicos">
+    <article class="pub"><img src="../assets/quem-muitos.jpg" alt="Persona frente a muchas carpetas de agente abiertas en la pantalla" loading="lazy" width="760" height="507">
+      <h3>Ya creaste muchos agentes</h3>
+      <p>Una carpeta para ventas, otra para soporte, otra para contenido. Quieres ver el tamaño de todo eso y un plan para juntarlo, sin perder nada.</p>
+      <p class="usa">Usa: <b>cuenta tus agentes</b></p></article>
+    <article class="pub"><img src="../assets/quem-negocio.jpg" alt="Dueña de un negocio usa un asistente de IA en el mostrador" loading="lazy" width="760" height="507">
+      <h3>Usas la IA en tu negocio</h3>
+      <p>Propuestas, atención al cliente y publicaciones en un solo asistente, con una skill para cada tarea y una para los datos de tus clientes.</p>
+      <p class="usa">Usa: <b>hazlo una vez, conviértelo en skill</b></p></article>
+    <article class="pub"><img src="../assets/quem-comecando.jpg" alt="Persona que empieza a usar una IA en la computadora de su casa" loading="lazy" width="760" height="507">
+      <h3>Estás empezando</h3>
+      <p>Empieza de la manera correcta: un agente, y cada tarea nueva se convierte en skill. De vez en cuando, revisa si la skill todavía marca la diferencia.</p>
+      <p class="usa">Usa: <b>las tres</b>, una a la vez</p></article>
+  </div>
 </div></section>
 
-<section id="dia"><div class="wrap">
-<span class="chip">En tu día</span>
-<h2>Cómo cambia esto <span class="amb">tu día</span></h2>
-<div class="grid g3">
-<div class="card"><h3>Corregiste al agente</h3><p><strong>Hoy:</strong> la corrección vale solo en esa carpeta; en las otras, el error vuelve.<br/><strong>Con el kit:</strong> la regla está en un solo lugar y vale para todas las tareas.</p></div>
-<div class="card"><h3>Apareció una tarea nueva</h3><p><strong>Hoy:</strong> otra carpeta, otro agente, otras reglas que mantener.<br/><strong>Con el kit:</strong> haces la tarea una vez con la IA, la corriges como corregirías a un practicante y pides que se convierta en skill.</p></div>
-<div class="card"><h3>Salió un modelo nuevo</h3><p><strong>Hoy:</strong> las instrucciones antiguas siguen ahí, aunque el modelo nuevo ya lo haga mejor solo.<br/><strong>Con el kit:</strong> la prueba a ciegas muestra si la skill todavía gana o si solo ocupa espacio.</p></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>🕘 Un día contado por horas</h3><p><strong>09:00</strong> pides la propuesta de un cliente; el agente abre la skill de propuesta y la de clientes. <strong>11:00</strong> pides la publicación de la semana; abre la skill de la marca, con tus colores y tu tono. <strong>15:00</strong> corriges una coma de estilo y guardas la lección una vez, en el lugar que vale para todo. <strong>Fin de mes</strong> ejecutas la prueba a ciegas en una tarea de siempre y descubres que una skill antigua ya puede salir.</p></div>
+<!-- ========== COMO FUNCIONA ========== -->
+<section id="passos"><div class="wrap">
+  <figure class="largo topo-sec"><img src="../assets/banner-grade-es.jpg" alt="Un Solo Agente: un agente general y muchas skills. El modelo es el procesador, el agente es el sistema, las skills son las aplicaciones" loading="lazy" width="1400" height="788"></figure>
+  <hr class="risco">
+  <p class="kicker">Cómo funciona</p>
+  <h2>Del pedido pegado al agente único, en 4 pasos</h2>
+  <p class="sub">Pegas un pedido y decides. La IA y dos programitas hacen el resto.</p>
+  <div class="passos">
+    <article class="passo">
+      <header><span class="n">1</span><h3>Pega el pedido en tu IA</h3></header>
+      <div class="quem"><span class="tag">Tú</span><p>Abres Claude Code o Codex y pegas el pedido de esta página.</p></div>
+      <div class="quem"><span class="tag ia">La IA</span><p>Descarga el kit y lee sus instrucciones.</p></div>
+      <p class="porque"><span>Por qué</span>No instalas nada a mano ni necesitas entender los comandos.</p>
+    </article>
+    <article class="passo">
+      <header><span class="n">2</span><h3>Mira el mapa de tus carpetas</h3></header>
+      <div class="quem"><span class="tag prog">El programa</span><p>El mapa cuenta las carpetas de agente, las skills y las reglas repetidas. Sin IA y sin internet.</p></div>
+      <div class="quem"><span class="tag ia">La IA</span><p>Explica el resultado en lenguaje sencillo.</p></div>
+      <p class="porque"><span>Por qué</span>Antes de cambiar, necesitas ver el tamaño de lo que tienes.</p>
+    </article>
+    <article class="passo">
+      <header><span class="n">3</span><h3>Aprueba el plan para juntar</h3></header>
+      <div class="quem"><span class="tag ia">La IA</span><p>Agrupa los agentes por tema, propone las skills que quedan en su lugar y las reglas que se convierten en una sola línea.</p></div>
+      <div class="quem"><span class="tag">Tú</span><p>Apruebas o recortas. Nada se borra ni se mueve antes de eso.</p></div>
+      <p class="porque"><span>Por qué</span>Quien conoce tu trabajo eres tú. La IA solo propone.</p>
+    </article>
+    <article class="passo">
+      <header><span class="n">4</span><h3>La tarea nueva se convierte en skill, y la skill se prueba</h3></header>
+      <div class="quem"><span class="tag">Tú</span><p>Haces la tarea una vez con la IA, corriges y pides que se convierta en skill. De vez en cuando, eliges entre dos respuestas a ciegas.</p></div>
+      <div class="quem"><span class="tag prog">El programa</span><p>La prueba ejecuta la misma tarea con y sin skills y solo revela cuál era cuál después de tu elección.</p></div>
+      <p class="porque"><span>Por qué</span>Un modelo nuevo puede hacerlo mejor sin la instrucción antigua.</p>
+    </article>
+  </div>
 </div></section>
 
-<section id="video"><div class="wrap">
-<span class="chip">En video</span>
-<h2>Entiéndelo en pocos minutos</h2>
-<iframe class="video-player" src="https://www.youtube-nocookie.com/embed/s2ve490BUl8" title="Un Solo Agente" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
-<p class="fonte"><a href="https://www.youtube.com/watch?v=s2ve490BUl8">Ver en YouTube</a></p>
+<!-- ========== AS 3 PARTES ========== -->
+<section id="jeitos"><div class="wrap">
+  <p class="kicker">Las 3 partes</p>
+  <h2>Tres partes. Juntas, cambian varios agentes por uno.</h2>
+  <p class="sub">Cada parte resuelve una duda: cuánto tengo, cómo enseño y si lo que enseñé todavía ayuda.</p>
+  <div class="jeitos-l">
+    <article class="jeito-l">
+      <div class="jl-diag">
+<div class="diag" data-diag>
+<div class="ctl"><span>Cuenta tus agentes</span><button type="button" data-btn>Pausar</button></div>
+<svg viewBox="0 0 360 540" role="img" aria-label="Diagrama del mapa: busca las carpetas, cuenta los agentes, lista las skills por tipo, encuentra las reglas repetidas y muestra el mapa sin cambiar nada">
+<line class="lnk" x1="30" y1="76" x2="30" y2="464"/>
+<text class="lb" x="46" y="104">solo lee: sin IA y sin internet</text>
+<text class="lb" x="46" y="312">descripción de menos de 40 letras = corta</text>
+<g class="nd" data-dwell="900" transform="translate(30,20)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">1 · Tus carpetas</text><text class="s" x="16" y="43">busca CLAUDE.md y AGENTS.md</text></g>
+<g class="nd wait" data-dwell="2600" data-checks="contando…|contando…|525 carpetas ✓" data-pref="agentes:" transform="translate(30,124)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">2 · Cuenta los agentes</text><text class="s" x="16" y="43">cada carpeta con reglas propias</text></g>
+<g class="nd" data-dwell="1100" transform="translate(30,228)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">3 · Lista las skills por tipo</text><text class="s" x="16" y="43">y encuentra las descripciones cortas</text></g>
+<g class="nd wait" data-dwell="2600" data-checks="buscando…|buscando…|en 65 a 73 carpetas ✓" data-pref="regla repetida:" transform="translate(30,332)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">4 · Encuentra reglas repetidas</text><text class="s" x="16" y="43">la misma línea en varias carpetas</text></g>
+<g class="nd" data-dwell="1400" transform="translate(30,436)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">5 · El mapa en pantalla</text><text class="s" x="16" y="43">no se cambió ningún archivo</text></g>
+<text class="ping" x="180" y="524" text-anchor="middle" data-ping></text>
+<circle class="ring" r="20"/><circle class="tok" r="9"/>
+</svg>
+</div>
+      </div>
+      <div class="jl-txt">
+        <p class="num">Parte 1</p>
+        <h3>Cuenta tus agentes</h3>
+        <p class="bom">Para ver el tamaño de lo que creaste antes de tocarlo.</p>
+        <p>Un programita sin IA cuenta tus carpetas con instrucciones propias (el archivo CLAUDE.md o AGENTS.md): cada una es un "agente" que mantienes por separado. Lista las skills por tipo, señala las descripciones demasiado cortas (por ellas el agente decide abrir la skill) y encuentra la misma regla copiada en varias carpetas.</p>
+        <p class="analogia"><b>Como en el día a día:</b> antes de ordenar el armario, sacas todo y cuentas. Ahí descubres cinco tijeras iguales en cinco cajones.</p>
+        <ul class="chips"><li>solo lee</li><li>sin IA, sin internet</li><li>lee las carpetas de skills de Claude y de Codex</li></ul>
+        <p class="origem">La idea viene de la charla de Anthropic "No crees agentes, crea skills" (Barry Zhang y Mahesh Murag, AI Engineer Code Summit 2025): lo que le falta al agente es especialidad, no inteligencia. <a href="https://www.ai.engineer/talks/agent-skills" target="_blank" rel="noopener">Charla</a> · <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener">publicación de Anthropic</a> (en inglés).</p>
+      </div>
+    </article>
+    <article class="jeito-l">
+      <div class="jl-diag">
+<div class="diag" data-diag>
+<div class="ctl"><span>Hazlo una vez, conviértelo en skill</span><button type="button" data-btn>Pausar</button></div>
+<svg viewBox="0 0 360 540" role="img" aria-label="Diagrama de la skill: haces la tarea con la IA, corriges hasta que quede bien, Skill Creator arma la carpeta, la skill queda con nombre y descripción y, en el próximo pedido parecido, el agente abre la skill solo">
+<line class="lnk" x1="30" y1="76" x2="30" y2="464"/>
+<text class="lb" x="46" y="208">pides: "ahora conviértelo en skill"</text>
+<text class="lb" x="46" y="312">parte de uno de los 4 modelos del kit</text>
+<g class="nd" data-dwell="900" transform="translate(30,20)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">1 · Haces la tarea con la IA</text><text class="s" x="16" y="43">una vez, como siempre</text></g>
+<g class="nd wait" data-dwell="2600" data-checks="corrección 1|corrección 2|quedó bien ✓" data-pref="tú:" transform="translate(30,124)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">2 · Corriges como a un pasante</text><text class="s" x="16" y="43">la IA observa cada corrección</text></g>
+<g class="nd" data-dwell="1100" transform="translate(30,228)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">3 · Skill Creator la arma</text><text class="s" x="16" y="43">la carpeta, con buenas prácticas</text></g>
+<g class="nd" data-dwell="1100" transform="translate(30,332)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">4 · La skill (SKILL.md)</text><text class="s" x="16" y="43">nombre y descripción: cuándo usarla</text></g>
+<g class="nd wait" data-dwell="2200" data-checks="leyendo las etiquetas…|coincide ✓" data-pref="agente:" transform="translate(30,436)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">5 · Próximo pedido parecido</text><text class="s" x="16" y="43">el agente abre la skill solo</text></g>
+<text class="ping" x="180" y="524" text-anchor="middle" data-ping></text>
+<circle class="ring" r="20"/><circle class="tok" r="9"/>
+</svg>
+</div>
+      </div>
+      <div class="jl-txt">
+        <p class="num">Parte 2</p>
+        <h3>Hazlo una vez, conviértelo en skill</h3>
+        <p class="bom">Para enseñar una tarea nueva sin crear otro agente.</p>
+        <p>Haces la tarea una vez con la IA, corriges hasta que quede bien y pides que se convierta en skill. Skill Creator, la skill oficial y gratuita de Anthropic, arma la carpeta. Al inicio del archivo principal (SKILL.md) van el nombre y la descripción, como la etiqueta en la puerta de una sala: el agente lee solo las etiquetas y entra cuando el pedido coincide. El kit trae un modelo de cada tipo: procedimiento (hacer una propuesta), banco (dónde están los datos de los clientes), artefacto (colores y diseño de la marca) y definición (lo que quieres decir con una palabra).</p>
+        <p class="analogia"><b>Como en el día a día:</b> solo escribes la receta después de lograr el plato. Y la guardas en el archivador correcto, no en un cuaderno nuevo para cada cena.</p>
+        <ul class="chips"><li>4 modelos listos</li><li>la descripción dice cuándo usarla</li><li>el agente la abre solo cuando la necesita</li></ul>
+        <p class="origem">Agent Skills es un estándar abierto: lanzado por Anthropic el 16/10/2025, abierto el 18/12/2025 y donado a la Agentic AI Foundation (Linux Foundation) en octubre de 2026. Una skill hecha para Claude funciona en Codex, en Cursor y en GitHub Copilot. <a href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" target="_blank" rel="noopener">Anuncio</a> (en inglés).</p>
+      </div>
+    </article>
+    <article class="jeito-l">
+      <div class="jl-diag">
+<div class="diag" data-diag>
+<div class="ctl"><span>Prueba sin skills</span><button type="button" data-btn>Pausar</button></div>
+<svg viewBox="0 0 360 540" role="img" aria-label="Diagrama de la prueba a ciegas: una tarea de siempre se ejecuta con skills y sin skills, se convierte en A y B, eliges sin saber cuál es cuál y solo después abres la clave">
+<line class="lnk" x1="30" y1="76" x2="30" y2="464"/>
+<text class="lb" x="46" y="312">sorteo: las respuestas son A y B</text>
+<g class="nd" data-dwell="900" transform="translate(30,20)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">1 · Una tarea de siempre</text><text class="s" x="16" y="43">ej.: ordenar notas de reunión</text></g>
+<g class="nd" data-dwell="1100" transform="translate(30,124)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">2 · Ejecución con skills</text><text class="s" x="16" y="43">todo cargado, como siempre</text></g>
+<g class="nd" data-dwell="1100" transform="translate(30,228)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">3 · Ejecución sin skills</text><text class="s" x="16" y="43">CLAUDE.md y hooks siguen</text></g>
+<g class="nd wait" data-dwell="2600" data-checks="¿A o B?|¿A o B?|ya elegí ✓" data-pref="a ciegas:" transform="translate(30,332)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">4 · Lees A y B</text><text class="s" x="16" y="43">eliges sin saber cuál es cuál</text></g>
+<g class="nd" data-dwell="1400" transform="translate(30,436)"><rect width="300" height="56" rx="12"/><text class="t" x="16" y="24">5 · Abres la clave</text><text class="s" x="16" y="43">si gana, queda; si empata, revisa</text></g>
+<text class="ping" x="180" y="524" text-anchor="middle" data-ping></text>
+<circle class="ring" r="20"/><circle class="tok" r="9"/>
+</svg>
+</div>
+      </div>
+      <div class="jl-txt">
+        <p class="num">Parte 3</p>
+        <h3>Prueba sin skills</h3>
+        <p class="bom">Para saber si la skill todavía ayuda o solo ocupa espacio.</p>
+        <p>La prueba ejecuta la misma tarea con tus skills y sin ninguna. Quita solo las skills; el CLAUDE.md y los hooks (disparadores automáticos) siguen activos en las dos ejecuciones. Las respuestas se convierten en A y B por sorteo; eliges la mejor y solo después abres la clave. La skill que gana se queda; la que empata o pierde, la reescribes o la quitas.</p>
+        <p class="analogia"><b>Como en el día a día:</b> una prueba de sabor sin etiquetas. Pruebas los dos vasos, eliges, y solo después ves cuál era la marca cara.</p>
+        <ul class="chips"><li>dos respuestas de tu suscripción por tarea</li><li>funciona en Claude Code</li><li>una tarea a la vez</li></ul>
+        <p class="origem">En los modelos Claude 5, Anthropic quitó más del 80% del prompt de sistema de Claude Code (sus instrucciones fijas) sin pérdida medida, y vio que también "amarraba" al modelo con CLAUDE.md y skills. Boris Cherny, creador de Claude Code, recomienda probar de vez en cuando sin esas instrucciones. <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener">Artículo</a> (en inglés).</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="tabela-wrap">
+  <table class="tabela">
+    <thead><tr><th></th><th>Cuenta tus agentes</th><th>Hazlo una vez, conviértelo en skill</th><th>Prueba sin skills</th></tr></thead>
+    <tbody>
+      <tr><th>Quién trabaja</th><td>un programita, sin IA</td><td>tú y la IA, juntos</td><td>un programita llama a la IA; tú juzgas</td></tr>
+      <tr><th>¿Gasta suscripción?</th><td>no</td><td>sí, como una conversación común</td><td>sí, dos respuestas por tarea</td></tr>
+      <tr><th>¿Cambia archivos?</th><td>no, solo lee</td><td>crea la skill nueva, con tu sí</td><td>no toca tus skills</td></tr>
+      <tr><th>Cuándo usarla</th><td>al principio, para ver el tamaño</td><td>con cada tarea nueva</td><td>de vez en cuando y con cada modelo nuevo</td></tr>
+      <tr><th>¿Con Codex?</th><td>sí</td><td>sí</td><td>por ahora, solo Claude Code</td></tr>
+    </tbody>
+  </table>
+  </div>
 </div></section>
 
-<section id="como"><div class="wrap">
-<figure style="margin:0 0 28px;border-radius:16px;overflow:hidden;border:1px solid var(--line)"><img alt="Las seis partes de la guía: el problema, lo que ganas, en tu día, cómo funciona, cómo empezar y la prueba" src="../assets/banner-grade-es.jpg" style="width:100%;display:block"/></figure>
-<span class="chip">Cómo funciona</span>
-<h2>Cómo funciona, <span class="amb">sin jerga</span></h2>
-<p class="sub">La comparación es de la charla de Anthropic: piensa en tu computadora.</p>
-<div class="pc">
-<div><span class="e">🔲</span><b>El modelo</b><i>= el procesador</i><p>Claude, GPT. Es la fuerza bruta que piensa. No cambias de procesador para cada tarea.</p></div>
-<div><span class="e">🖥️</span><b>El agente</b><i>= el sistema operativo</i><p>Claude Code o Codex. Lee tus archivos, usa las herramientas y organiza el trabajo. Con uno basta.</p></div>
-<div><span class="e">📱</span><b>Las skills</b><i>= las aplicaciones</i><p>Cada tarea que enseñas. Para hacer algo nuevo, instalas una aplicación, no compras otra computadora.</p></div>
-</div>
-<div class="grid g2">
-<div class="card"><h3>🏷️ La etiqueta en la puerta</h3><p>Cada skill es una carpeta con un archivo principal, el SKILL.md. Arriba lleva un nombre y una descripción, como la etiqueta en la puerta de una sala. El agente lee solo las etiquetas y entra en la sala cuando el pedido coincide. Por eso la descripción tiene que decir <strong>cuándo</strong> usar la skill.</p></div>
-<div class="card"><h3>🗂️ Una skill no es solo una lista de pasos</h3><p>El kit trae modelos de los cuatro tipos: <strong>procedimiento</strong> (cómo hacer una propuesta), <strong>base de datos</strong> (dónde están los datos de los clientes), <strong>artefacto</strong> (los colores y el diseño de la marca) y <strong>definición</strong> (una frase que dice qué quieres decir con una palabra).</p></div>
-<div class="card"><h3>🍳 La skill nace del trabajo</h3><p>Como una receta que solo escribes después de acertar con el plato: haz la tarea una vez con la IA, corrígela hasta que quede bien y pide que se convierta en skill. Skill Creator, una skill oficial y gratuita de Anthropic, arma la carpeta según las buenas prácticas.</p></div>
-<div class="card"><h3>🧪 La prueba a ciegas</h3><p>Como una prueba de sabor sin etiqueta: la misma tarea se ejecuta con tus skills y sin ninguna. Lees las dos respuestas, llamadas solo A y B, eliges la mejor y solo después descubres cuál era cuál.</p></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>⚠️ Lo que no promete</h3><p>El kit no une tus agentes solo ni borra nada: muestra el mapa y tu IA propone un plan, que solo avanza con tu sí. La prueba a ciegas mide una tarea a la vez; un empate en una tarea no demuestra que la skill sea inútil en todas. Y la prueba usa tu suscripción de Claude: son dos respuestas por tarea.</p></div>
+<!-- ========== QUESTÕES IMPORTANTES ========== -->
+<section id="importantes"><div class="wrap">
+  <p class="kicker">Preguntas importantes</p>
+  <h2>Tres dudas antes de juntar tus agentes</h2>
+
+  <div class="questao" id="perder">
+  <h3 class="q-tit"><span>1</span>¿Voy a perder lo que mis agentes ya saben?</h3>
+  <p class="sub">No. El mapa solo lee, y el plan solo muestra lo que cambiaría. Lo que sabe cada carpeta cambia de lugar, no desaparece.</p>
+  <figure class="largo m"><img src="../assets/q-juntar.jpg" alt="Una mano coloca la última carpeta suelta en un único archivador con pestañas de colores" loading="lazy" width="1200" height="800"></figure>
+  <div class="duas">
+    <div class="bloco">
+      <h3>Lo que solo sabe un agente se convierte en skill</h3>
+      <p>Para cada grupo de carpetas, la IA dice qué sabe ese grupo que el agente principal no sabe. Eso se convierte en la skill de ese tema.</p>
+    </div>
+    <div class="bloco">
+      <h3>Lo que todos repiten se convierte en una línea</h3>
+      <p>Reglas como "cuando te corrija, guarda la lección" van a un solo lugar, el CLAUDE.md principal, y pasan a valer en todas las tareas.</p>
+      <p class="medido">En nuestra máquina, la regla más repetida estaba copiada en 73 carpetas.</p>
+    </div>
+  </div>
+  <p class="analogia"><b>Como en el día a día:</b> juntar cinco cuadernos de recetas en un archivador con pestañas. No se pierde ninguna receta, y el "lávate las manos antes" va en la portada, escrito una sola vez.</p>
+  </div>
+
+  <div class="questao" id="terceiros">
+  <h3 class="q-tit"><span>2</span>¿Es segura una skill de terceros?</h3>
+  <p class="sub">No siempre. Una skill puede traer un programa incluido, y un programa puede hacer más de lo que dice la descripción. Revisa antes de instalar.</p>
+  <figure class="largo m"><img src="../assets/q-de-fora.jpg" alt="Mujer examina con lupa una caja llegada de afuera antes de llevarla al taller" loading="lazy" width="1200" height="800"></figure>
+  <div class="duas">
+    <div class="bloco">
+      <h3>El riesgo</h3>
+      <p>Una skill de herramienta ejecuta programas en tu computadora. Si accede a internet, lee contraseñas o borra archivos, necesitas saberlo antes.</p>
+      <p class="medido">De nuestras 119 skills, 61 son de este tipo: traen un programa incluido.</p>
+    </div>
+    <div class="bloco">
+      <h3>Lo que hace el kit</h3>
+      <p>Trae un pedido listo: la IA lee todos los archivos sin ejecutar nada y dice qué hace de verdad la skill, si repite algo que ya tienes y el veredicto: instalar, adaptar o no instalar.</p>
+    </div>
+  </div>
+  <p class="analogia"><b>Como en el día a día:</b> antes de instalar una aplicación de fuera de la tienda, lees qué permisos pide.</p>
+  </div>
+
+  <div class="questao" id="onde">
+  <h3 class="q-tit"><span>3</span>¿Sirve para claude.ai Projects o GPTs?</h3>
+  <p class="sub">En parte. La idea vale en cualquier lugar, pero el mapa solo cuenta carpetas en tu computadora.</p>
+  <figure class="largo m"><img src="../assets/q-onde.jpg" alt="Computadora iluminada sobre la mesa, mientras los íconos de nube y de navegador quedan apagados, fuera de la luz" loading="lazy" width="1200" height="800"></figure>
+  <div class="duas">
+    <div class="bloco">
+      <h3>Lo que el kit ve</h3>
+      <p>Carpetas con CLAUDE.md o AGENTS.md y las carpetas de skills de Claude Code y de Codex, en tu computadora. La prueba a ciegas, por ahora, solo funciona en Claude Code.</p>
+    </div>
+    <div class="bloco">
+      <h3>Lo que no ve</h3>
+      <p>Los proyectos del sitio de Claude y los GPTs de ChatGPT están en la nube; el mapa no los cuenta. Ahí, revisa a mano: cuántos tienes y si repiten las mismas instrucciones.</p>
+    </div>
+  </div>
+  <p class="analogia"><b>Como en el día a día:</b> el inventario de tu casa cuenta lo que está en los cajones, no lo que dejaste en el casillero del centro comercial.</p>
+  </div>
 </div></section>
 
-<section id="comecar"><div class="wrap">
-<span class="chip">Cómo empezar</span>
-<h2>Pide a tu IA que <span class="amb">haga el mapa contigo</span></h2>
-<p class="sub">No instalas nada a mano. La IA descarga el kit, mira tus carpetas, lo explica en lenguaje sencillo y solo cambia algo después de tu sí.</p>
-<div class="card" style="margin-bottom:16px"><h3>📋 Antes de empezar</h3><p><strong>Necesitas:</strong> una computadora con Claude Code o Codex y la suscripción de uno de ellos, y Python 3 (si falta, la propia IA lo instala). La prueba a ciegas usa Claude Code.</p><p><strong>Cuánto cuesta:</strong> el kit es gratis. El mapa no usa IA ni internet. La prueba a ciegas gasta dos respuestas de tu suscripción de Claude por cada tarea probada.</p><p><strong>Dónde se probó (26/11/2026):</strong> en una computadora con Linux, con Claude Code, sobre las carpetas reales de INEMA (<a href="#prova">mira la prueba</a>).</p></div>
-<div class="grid g3">
-<div class="card"><h3>1. Abre tu IA en la computadora</h3><p><strong>Claude Code</strong> o <strong>Codex</strong>. Se abren en una ventana de texto, pero conversas en español.</p></div>
-<div class="card"><h3>2. Pega el pedido de abajo</h3><p>Le indica a la IA que lea el kit, haga el mapa de tus carpetas y diga qué vale la pena unir.</p></div>
-<div class="card"><h3>3. Di sí a lo que tenga sentido</h3><p>La IA muestra el plan: qué agentes se convierten en skills y qué reglas van a un solo lugar. Nada cambia antes de tu sí.</p></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>🧰 ¿Todavía no tienes Claude Code ni Codex?</h3><p>La página de cada uno tiene el botón de descarga y el paso a paso: <a href="https://claude.com/product/claude-code" rel="noopener" target="_blank">Claude Code</a> · <a href="https://openai.com/codex/" rel="noopener" target="_blank">Codex</a>.</p></div>
-<p class="mut" style="margin-top:20px">No necesitas entender el texto de abajo: es para la IA. Copia y pega.</p>
-<div style="margin-top:8px">
-<pre id="pedidoTxt" style="white-space:pre-wrap">Lee el kit "Un Solo Agente" en https://github.com/inematds/um-agente-so (README, prompts/ y modelos/).
-Quiero trabajar con UN agente principal y muchas skills, en lugar de una carpeta de agente por tarea.
+<!-- ========== ANTES DE INSTALAR ========== -->
+<section id="precisa"><div class="wrap">
+  <p class="kicker">Antes de instalar</p>
+  <h2>Lo que necesitas tener, y lo que el kit no promete</h2>
+  <div class="duas">
+    <div class="bloco">
+      <h3>Necesitas</h3>
+      <ul class="lista sim">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><strong>Una computadora con Claude Code o Codex.</strong><span>Y la suscripción de uno de ellos. Probado el 26/11/2026 en una computadora con Linux y Claude Code.</span></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><strong>Python 3.</strong><span>Los dos programitas del kit lo usan. Si falta, la propia IA lo instala.</span></div></li>
+      </ul>
+    </div>
+    <div class="bloco">
+      <h3>El kit no promete</h3>
+      <ul class="lista">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><div><strong>Juntar los agentes solo.</strong><span>Muestra el mapa y la IA propone un plan, que solo avanza con tu sí.</span></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><div><strong>Probar todo con una sola prueba.</strong><span>La prueba mide una tarea a la vez. Un empate en una tarea no demuestra que la skill sea inútil en todas.</span></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><div><strong>Pruebas gratis.</strong><span>Cada tarea probada gasta dos respuestas de tu suscripción de Claude. El mapa no gasta nada.</span></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><div><strong>Ser oficial de Anthropic.</strong><span>El kit es de INEMA. Las fuentes citadas son públicas; los números los medimos nosotros.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- ========== NA PRÁTICA ========== -->
+<section id="comecar"><div class="wrap"><div class="col">
+  <p class="kicker">En la práctica</p>
+  <h2>Para empezar, pega este pedido en tu IA</h2>
+  <ol class="tres">
+    <li><p>Abre <a href="https://claude.com/product/claude-code" target="_blank" rel="noopener">Claude Code</a> o <a href="https://openai.com/codex/" target="_blank" rel="noopener">Codex</a>. Son IAs que trabajan con los archivos de tu computadora, siempre pidiendo permiso.</p></li>
+    <li><p>Pega el pedido. La IA descarga el kit, hace el mapa de tus carpetas y dice qué vale la pena juntar.</p></li>
+    <li><p>Di que sí solo a lo que tenga sentido. Para la prueba a ciegas, primero te pregunta qué tarea probar.</p></li>
+  </ol>
+  <div class="pedido">
+    <div class="pedido-barra">
+      <p>El texto es para la IA. No necesitas entenderlo, solo copiarlo.</p>
+      <button class="btn" id="copiar" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span id="copiarTxt">Copiar el pedido</span></button>
+    </div>
+<pre id="pedidoTxt">Lee el kit "Un Solo Agente" en https://github.com/inematds/um-agente-so (README, prompts/ y modelos/).
+Quiero trabajar con UN agente principal y muchas skills, en vez de una carpeta de agente por tarea.
 1. Descarga el kit y ejecuta mapa.py sobre mis carpetas de proyectos (solo lee). Dime en lenguaje
    sencillo: cuántas carpetas de agente (CLAUDE.md/AGENTS.md) tengo, cuántas skills y de qué tipo,
    qué descripciones son demasiado cortas y qué reglas se repiten en varias carpetas.
@@ -267,81 +580,152 @@ Quiero trabajar con UN agente principal y muchas skills, en lugar de una carpeta
 3. No borres, no muevas y no edites nada. Solo muéstrame el plan y espera mi sí.
 4. Si quiero la prueba a ciegas (ab.py), pregúntame antes qué tarea probar: usa dos
    respuestas de mi suscripción de Claude.</pre>
-<button class="btn" id="copiarPedido" style="margin-top:10px">Copiar el pedido</button>
-</div>
-<div class="grid g2" style="margin-top:16px">
-<div class="card"><h3>🌐 ¿Se puede usar sin instalar?</h3><p>No. El mapa mira las carpetas de tu computadora, así que tiene que ejecutarse en ella. Lo que sí puedes ver sin instalar es el kit, los modelos de skill y la prueba, en GitHub.</p></div>
-<div class="card"><h3>⬇️ ¿Dónde se descarga?</h3><p>No hay un instalador con ventanas: el kit es una carpeta pequeña, y el pedido de arriba ya le indica a la IA que lo descargue. Si quieres los archivos:</p><p><a class="btn ghost" href="https://github.com/inematds/um-agente-so/archive/refs/heads/main.zip">Descargar el kit (ZIP)</a></p></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>🛠️ ¿Eres técnico y prefieres hacerlo a mano?</h3><p>Los comandos, las opciones y las pruebas están en el README de GitHub.</p><p><a class="btn ghost" href="https://github.com/inematds/um-agente-so/blob/main/README.es.md#instalación-técnica" rel="noopener" target="_blank">Ver la instalación técnica</a></p></div>
+  </div>
+  <span class="vh" id="aviso" role="status" aria-live="polite"></span>
+  <div class="cartoes3">
+    <div class="bloco"><h3>¿Solo quieres entender, sin instalar?</h3><p class="mut">Mira las tres animaciones de arriba y el video. No hay versión en línea: el mapa necesita revisar las carpetas de tu computadora. Los modelos de skill están en <a href="https://github.com/inematds/um-agente-so" target="_blank" rel="noopener">GitHub</a>.</p></div>
+    <div class="bloco"><h3>¿Dónde se descarga?</h3><p class="mut">No hay instalador: el kit es una carpeta pequeña, y el pedido ya le indica a la IA que lo descargue. Si quieres los archivos, <a href="https://github.com/inematds/um-agente-so/archive/refs/heads/main.zip">descarga el ZIP del kit</a>.</p></div>
+    <div class="bloco"><h3>¿Es técnico?</h3><p class="mut">Los comandos, las opciones y las pruebas están en la <a href="https://github.com/inematds/um-agente-so/blob/main/README.es.md#instalación-técnica" target="_blank" rel="noopener">instalación técnica del README</a>.</p></div>
+  </div>
+</div></div></section>
+
+<!-- ========== VÍDEO ========== -->
+<section id="video"><div class="wrap">
+  <p class="kicker">Video</p>
+  <h2>Entiéndelo en pocos minutos</h2>
+  <div class="video-box"><iframe src="https://www.youtube-nocookie.com/embed/s2ve490BUl8" title="Un Solo Agente" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+  <p class="fonte"><a href="https://www.youtube.com/watch?v=s2ve490BUl8" target="_blank" rel="noopener">Ver en YouTube</a></p>
 </div></section>
 
+<!-- ========== MEDIDO ========== -->
 <section id="prova"><div class="wrap">
-<span class="chip">La prueba</span>
-<h2>Ejecutamos el kit en la <span class="amb">máquina de INEMA</span></h2>
-<p class="sub">Antes de pedirte que lo hagas, lo hicimos. Estos son los números de nuestras carpetas al 26/11/2026.</p>
-<div class="big">
-<div class="destaque"><b>525</b><span>carpetas de agente, cada una con sus propias instrucciones, para mantener una por una</span></div>
-<div><b>119</b><span>skills instaladas: 61 de herramienta (skill que trae un programa), 28 de procedimiento, 26 de artefacto y 4 de base de datos</span></div>
-<div class="destaque"><b>73</b><span>carpetas con la misma regla copiada (la más repetida; otras aparecen en 65). Debería ser una sola línea</span></div>
-<div><b>51</b><span>skills con la descripción demasiado corta. El agente decide abrir la skill por la descripción</span></div>
-</div>
-<h3 style="margin-top:34px;font-size:1.25rem">La prueba a ciegas: la misma tarea, con y sin skills</h3>
-<p class="mut" style="margin:.5em 0 0;max-width:72ch">La tarea: organizar las notas de una reunión para enviarlas al equipo. El proyecto de prueba tenía una skill antigua, que mandaba escribir "ACTA DE REUNIÓN", no sacar conclusiones y terminar con "Fin del acta". Comprobamos antes que Claude veía la skill en la ronda con skills, y no en la otra.</p>
-<div class="tblwrap"><table class="tbl">
-<thead><tr><th></th><th>Con las skills</th><th>Sin ninguna skill</th></tr></thead>
-<tbody>
-<tr><td>Tiempo</td><td data-l="Con las skills">12,1 s</td><td data-l="Sin ninguna skill">10,6 s</td></tr>
-<tr><td>Tamaño</td><td data-l="Con las skills">160 palabras, en tabla</td><td data-l="Sin ninguna skill">112 palabras, en lista</td></tr>
-<tr><td>Quién hace qué y para cuándo</td><td data-l="Con las skills" class="ok">sí</td><td data-l="Sin ninguna skill" class="ok">sí</td></tr>
-<tr><td>Siguió la skill antigua</td><td data-l="Con las skills" class="bad">no</td><td data-l="Sin ninguna skill">—</td></tr>
-</tbody></table></div>
-<div class="veredito"><p><strong>Empate, y la skill antigua ni siquiera se siguió.</strong> El modelo nuevo entregó lo que el equipo necesita en las dos rondas. La skill solo ocupaba espacio: candidata a salir o a reescribirse. Va en la misma dirección que lo que vio Anthropic al quitar más del 80% del prompt de sistema de Claude Code.</p></div>
-<p class="fonte">La lista de nuestras carpetas y skills se queda solo en nuestra máquina. Las dos respuestas completas de la prueba están en <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos" rel="noopener" target="_blank">GitHub, en exemplos/</a>.</p>
+  <p class="kicker">Medido</p>
+  <h2>Ejecutamos el kit en la máquina de INEMA</h2>
+  <p class="sub">Antes de pedirte que lo hagas, lo hicimos. Números de nuestras carpetas al 26/11/2026.</p>
+  <div class="numeros">
+    <div class="numero"><b>525</b><span>carpetas de agente, cada una con sus instrucciones, para mantener una por una.</span></div>
+    <div class="numero"><b>119</b><span>skills: 61 de herramienta (traen un programa), 28 de procedimiento, 26 de artefacto y 4 de banco.</span></div>
+    <div class="numero"><b>73</b><span>carpetas con la misma regla copiada (la más repetida; otras aparecen en 65). Debería ser una sola línea.</span></div>
+    <div class="numero"><b>51</b><span>skills con la descripción demasiado corta, de menos de 40 letras.</span></div>
+  </div>
+  <h3 class="ab-tit">La prueba a ciegas: notas de reunión, con y sin skills</h3>
+  <p class="sub">El proyecto de prueba tenía una skill antigua: escribir "ATA DE REUNIÃO", no sacar conclusiones y terminar con "Fim da ata". Verificamos que Claude solo la veía en la ejecución con skills. Modelo: claude-sonnet-5-5.</p>
+  <div class="tabela-wrap">
+  <table class="tabela">
+    <thead><tr><th></th><th>Con las skills</th><th>Sin ninguna skill</th></tr></thead>
+    <tbody>
+      <tr><th>Tiempo</th><td>12,1 s</td><td>10,6 s</td></tr>
+      <tr><th>Tamaño</th><td>160 palabras, en tabla</td><td>112 palabras, en lista</td></tr>
+      <tr><th>Quién hace qué y para cuándo</th><td>sí</td><td>sí</td></tr>
+      <tr><th>Siguió la skill antigua</th><td>no</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub">Empate, y la skill antigua ni siquiera se siguió: candidata a salir o a reescribirse. Las dos respuestas completas están en <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos" target="_blank" rel="noopener">GitHub, en exemplos/</a>.</p>
 </div></section>
 
-<section id="faq"><div class="wrap">
-<span class="chip">Preguntas frecuentes</span>
-<h2>Antes de que <span class="amb">empieces</span></h2>
-<div class="grid g2">
-<div class="card"><h3>¿Necesito saber programar?</h3><p>No. Pegas el pedido y la IA hace el mapa y el plan contigo. Los comandos están en el README, para quien los prefiera.</p></div>
-<div class="card"><h3>¿Cuánto cuesta?</h3><p>El kit es gratis. El mapa no usa IA. La prueba a ciegas gasta dos respuestas de tu suscripción de Claude por tarea.</p></div>
-<div class="card"><h3>¿Borra mis agentes?</h3><p>No. El mapa solo lee, y el plan para unir los agentes solo muestra lo que cambiaría. Quien decide y aprueba eres tú.</p></div>
-<div class="card"><h3>Uso Codex. ¿Sirve?</h3><p>Sirve para el mapa, los modelos y el plan: Codex también lee skills con el mismo estándar abierto. La prueba a ciegas, por ahora, se ejecuta con Claude Code.</p></div>
-<div class="card"><h3>Ya tengo skills de terceros. ¿Y ahora?</h3><p>El kit trae un pedido para que la IA revise una skill externa antes de instalarla: qué hace de verdad, si accede a internet, lee contraseñas o borra archivos.</p></div>
-<div class="card"><h3>Entonces, ¿debo borrar todas mis skills?</h3><p>No. Prueba una tarea a la vez. Si la skill gana, se queda. Si empata o pierde, reescríbela o quítala.</p></div>
-</div>
-<p class="fonte" style="margin-top:22px">Y tú: ¿cuántos agentes has creado ya, y cuántos de ellos todavía recuerdan la última corrección que hiciste? Gratis en inema.club, directo en internet.</p>
+<!-- ========== PERGUNTAS ========== -->
+<section id="perguntas"><div class="wrap"><div class="col">
+  <p class="kicker">Preguntas</p>
+  <h2>Preguntas antes de empezar</h2>
+  <div class="faq">
+    <details><summary>¿Necesito saber programar?</summary><p>No. Pegas el pedido y la IA hace el mapa y el plan contigo.</p></details>
+    <details><summary>¿Cuánto cuesta?</summary><p>El kit es gratis. El mapa no usa IA. La prueba a ciegas gasta dos respuestas de tu suscripción de Claude por cada tarea probada.</p></details>
+    <details><summary>¿Debo borrar todas mis skills?</summary><p>No. Prueba una tarea a la vez. Si la skill gana, se queda. Si empata o pierde, reescríbela o quítala.</p></details>
+    <details><summary>Y después de juntar, ¿cómo cuido las skills?</summary><p>Hay kits hermanos, también gratis: <a href="https://inematds.github.io/ensine-uma-vez/guia/" target="_blank" rel="noopener">Ensine Uma Vez</a> (una conversación que salió bien se convierte en procedimiento), <a href="https://inematds.github.io/auditar-skills/guia/" target="_blank" rel="noopener">Auditar Skills</a> (revisa cada skill contra 46 reglas) y <a href="https://github.com/inematds/jogue-fora-skills" target="_blank" rel="noopener">Jogue fora os seus skills</a> (limpieza de las que ya no se ganan su lugar).</p></details>
+  </div>
+</div></div></section>
+
+<!-- ========== FECHO ========== -->
+<section class="fecho"><div class="wrap">
+  <h2>Y tú: ¿cuántos agentes creaste ya, y cuántos todavía recuerdan la última corrección que hiciste?</h2>
+  <p>Cuéntalos y mira otros kits gratis en <a href="https://inema.club" target="_blank" rel="noopener">inema.club</a>, directo en internet.</p>
+  <div class="cta"><a class="btn" href="#comecar">Ir al pedido</a></div>
 </div></section>
+
 </main>
 
-<footer>
-<div class="wrap">
-<div class="pill">Kit gratis</div><div class="pill">Claude Code · Codex</div><div class="pill">Solo lee, nada cambia sin tu sí</div><div class="pill">PT · EN · ES</div>
-<p style="margin-top:18px">Un Solo Agente · kit de INEMA, no oficial de Anthropic · gratis en inema.club, directo en internet ·
-      <a href="https://github.com/inematds/um-agente-so">inematds/um-agente-so</a> ·
-      <a href="https://inema.club">INEMA.CLUB</a></p>
-</div>
-</footer>
+<footer><div class="wrap">
+  <nav aria-label="Pie de página">
+    <span>Un Solo Agente · kit de INEMA, no oficial de Anthropic</span>
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <a href="https://github.com/inematds/um-agente-so" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+  <button class="tema" id="tema" type="button">Tema claro</button>
+</div></footer>
+
 <script>
-  (function(){
-    var KEY='um-agente-so-theme';
-    var b=document.body, t=document.getElementById('themeToggle');
-    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
-    t.addEventListener('click',function(){
-      var light=b.classList.toggle('light');
-      t.textContent=light?'☀️':'🌙';
-      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
-    });
-  })();
-  (function(){
-    var bt=document.getElementById('copiarPedido'), tx=document.getElementById('pedidoTxt');
-    if(!bt||!tx) return;
-    var label=bt.textContent;
-    bt.addEventListener('click',function(){
-      try{ navigator.clipboard.writeText(tx.textContent).then(function(){ bt.textContent='Copiado ✓'; setTimeout(function(){bt.textContent=label;},2000); }); }catch(e){}
-    });
-  })();
+(function(){
+  var TXT={claro:'Tema claro',escuro:'Tema oscuro',copiado:'Copiado',aviso:'Pedido copiado.',sel:'Selecciona el texto y cópialo'};
+  var K='um-agente-so-theme', b=document.body, t=document.getElementById('tema');
+  function rot(){ t.textContent = b.classList.contains('light') ? TXT.escuro : TXT.claro; }
+  try{ if(localStorage.getItem(K)==='light') b.classList.add('light'); }catch(e){}
+  rot();
+  t.addEventListener('click',function(){
+    var l=b.classList.toggle('light'); rot();
+    try{ localStorage.setItem(K, l?'light':'dark'); }catch(e){}
+  });
+
+  /* copy: direct copy first, then the clipboard API */
+  var bt=document.getElementById('copiar'), lb=document.getElementById('copiarTxt'),
+      tx=document.getElementById('pedidoTxt'), av=document.getElementById('aviso'), orig=lb.textContent, timer;
+  function ok(){ lb.textContent=TXT.copiado; av.textContent=TXT.aviso; clearTimeout(timer);
+    timer=setTimeout(function(){ lb.textContent=orig; av.textContent=''; },2500); }
+  function falhou(){ lb.textContent=TXT.sel; var r=document.createRange(); r.selectNodeContents(tx);
+    var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  function direto(){
+    var a=document.createElement('textarea'); a.value=tx.textContent; a.setAttribute('readonly','');
+    a.style.position='fixed'; a.style.opacity='0'; document.body.appendChild(a); a.select();
+    var feito=false; try{ feito=document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(a); return feito;
+  }
+  bt.addEventListener('click',function(){
+    if(direto()){ ok(); return; }
+    var resolvido=false;
+    function fim(f){ return function(){ if(!resolvido){ resolvido=true; f(); } }; }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      try{ navigator.clipboard.writeText(tx.textContent).then(fim(ok), fim(falhou)); }catch(e){ fim(falhou)(); }
+      setTimeout(fim(falhou),1500);
+    }else{ falhou(); }
+  });
+})();
+</script>
+<script>
+/* Diagramas: um único loop rAF, pausado fora da tela; movimento reduzido = estado final parado. */
+(function(){
+  var reduz=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MOVE=650, PAUSA_FIM=1600;
+  var LBL={pausar:'Pausar',repetir:'Repetir'};
+  var diags=[].slice.call(document.querySelectorAll('[data-diag]')).map(function(el){
+    var svg=el.querySelector('svg'),nds=[].slice.call(svg.querySelectorAll('.nd')),tok=svg.querySelector('.tok'),ring=svg.querySelector('.ring'),ping=svg.querySelector('[data-ping]'),btn=el.querySelector('[data-btn]');
+    var pts=nds.map(function(n){var m=/translate\(([\d.]+),([\d.]+)\)/.exec(n.getAttribute('transform'));return{x:+m[1],y:+m[2]+28,dw:+(n.getAttribute('data-dwell')||900),ck:(n.getAttribute('data-checks')||'').split('|').filter(Boolean),pref:n.getAttribute('data-pref')||''}});
+    var tl=[],acc=0;pts.forEach(function(p,i){if(i>0){tl.push({k:'m',a:i-1,b:i,t0:acc,t1:acc+MOVE});acc+=MOVE}tl.push({k:'d',i:i,t0:acc,t1:acc+p.dw});acc+=p.dw});
+    var d={el:el,nds:nds,tok:tok,ring:ring,ping:ping,btn:btn,pts:pts,tl:tl,total:acc+PAUSA_FIM,t:0,vis:false,play:!reduz,fim:false};
+    btn.onclick=function(){if(d.fim||reduz){d.t=0;d.fim=false;d.play=true}else d.play=!d.play;btn.textContent=d.play?LBL.pausar:LBL.repetir;if(reduz&&d.play)reduzFinal(d,true);kick()};
+    if(reduz){btn.textContent=LBL.repetir;reduzFinal(d)}else desenha(d,0);
+    return d});
+  function reduzFinal(d,toca){if(toca){d.play=true;return}var p=d.pts[d.pts.length-1];d.nds.forEach(function(n){n.classList.add('on')});d.tok.setAttribute('cx',p.x);d.tok.setAttribute('cy',p.y);d.ping.textContent='';d.play=false}
+  function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
+  function desenha(d,t){
+    var seg=null;for(var i=0;i<d.tl.length;i++){if(t>=d.tl[i].t0&&t<d.tl[i].t1){seg=d.tl[i];break}}
+    var x,y,ativo,txt='',anel=0;
+    if(!seg){var p=d.pts[d.pts.length-1];x=p.x;y=p.y;ativo=d.pts.length-1}
+    else if(seg.k==='m'){var a=d.pts[seg.a],b=d.pts[seg.b],f=ease((t-seg.t0)/(seg.t1-seg.t0));x=a.x;y=a.y+(b.y-a.y)*f;ativo=seg.a}
+    else{var q=d.pts[seg.i];x=q.x;y=q.y;ativo=seg.i;if(q.ck.length){var fr=(t-seg.t0)/(seg.t1-seg.t0),k=Math.min(q.ck.length-1,Math.floor(fr*q.ck.length));txt=q.pref+' '+q.ck[k];anel=(fr*q.ck.length)%1}}
+    d.nds.forEach(function(n,j){n.classList.toggle('on',j<=ativo)});
+    d.tok.setAttribute('cx',x);d.tok.setAttribute('cy',y);
+    d.ring.setAttribute('cx',x);d.ring.setAttribute('cy',y);d.ring.setAttribute('r',10+anel*22);d.ring.style.opacity=anel?(1-anel)*.8:0;
+    d.ping.textContent=txt;
+  }
+  var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){diags.forEach(function(d){if(d.el===e.target)d.vis=e.isIntersecting})});kick()},{threshold:.15}):null;
+  diags.forEach(function(d){if(io)io.observe(d.el);else d.vis=true});
+  var rodando=false,ult=0;
+  function kick(){if(!rodando&&diags.some(function(d){return d.vis&&d.play})){rodando=true;ult=performance.now();requestAnimationFrame(loop)}}
+  function loop(now){var dt=Math.min(64,now-ult);ult=now;var algum=false;
+    diags.forEach(function(d){if(!d.vis||!d.play)return;algum=true;d.t+=dt;if(d.t>=d.total){d.t=0}desenha(d,d.t)});
+    if(algum)requestAnimationFrame(loop);else rodando=false}
+  kick();
+})();
 </script>
 </body>
 </html>
