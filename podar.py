@@ -16,6 +16,10 @@ instrução em dois grupos:
            dados      número, caminho de arquivo, e-mail, nome próprio
   neutro   frase que não bate com nenhuma regra (fica fora da conta).
 
+% de passo = passo ÷ (passo + guardar). O neutro não entra.
+As listas de palavras são em português (com poucas em inglês e
+espanhol): skill escrita em outra língua cai mais no neutro.
+
 Ordem de decisão (a primeira que bate vence):
   correção > definição > marca > dados > passo > neutro
 Por quê: "1. Nunca prometa prazo" é uma correção, não um passo. E um
@@ -166,13 +170,16 @@ def analisar(caminho: str) -> dict:
     for it in itens:
         conta[it["tipo"]] += 1
     total = len(itens)
+    contadas = conta["passo"] + sum(conta[k] for k in GUARDAR)
     return {
         "arquivo": caminho,
         "skill": nome_da_skill(texto, caminho),
         "linhas": total,
         "contagem": conta,
         "guardar": sum(conta[k] for k in GUARDAR),
-        "pct_passo": round(100 * conta["passo"] / total) if total else 0,
+        "contadas": contadas,
+        "pct_passo": (round(100 * conta["passo"] / contadas)
+                      if contadas else 0),
         "itens": itens,
     }
 
@@ -202,7 +209,7 @@ def relatorio(r: dict, maximo: int) -> str:
     out = [f"{r['arquivo']}  (skill: {r['skill']})",
            f"  {r['linhas']} linhas de instrução lidas",
            f"  PASSO (como fazer, candidato a cortar) {c['passo']:>4}"
-           f"  ({r['pct_passo']}% de {r['linhas']})",
+           f"  ({r['pct_passo']}% de {r['contadas']})",
            f"  GUARDAR (o modelo não sabe)            {r['guardar']:>4}",
            "    " + " · ".join(f"{k} {c[k]}" for k in GUARDAR),
            f"  neutro (fora da conta)                 {c['neutro']:>4}"]
@@ -259,10 +266,11 @@ def main(argv=None) -> int:
     print("\n\n".join(relatorio(r, maximo) for r in rs))
     if len(rs) > 1:
         tl = sum(r["linhas"] for r in rs)
+        tc = sum(r["contadas"] for r in rs)
         tp = sum(r["contagem"]["passo"] for r in rs)
-        pct = round(100 * tp / tl) if tl else 0
+        pct = round(100 * tp / tc) if tc else 0
         print(f"\nTotal: {len(rs)} skills, {tl} linhas, {tp} de passo"
-              f" ({pct}%)")
+              f" ({pct}% de {tc} passo + guardar)")
     print("\n" + RECOMENDA)
     return 0
 

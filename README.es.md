@@ -48,7 +48,7 @@ No hay versión en línea: el mapa necesita mirar las carpetas de tu ordenador. 
 | 2 | **El más recomendado.** Haz la tarea una vez con Claude, corrígelo como corregirías a un practicante y al final pídele "convierte esta sesión en una skill". ¿Hay una regla nueva? Pídele que actualice la skill. | `prompts/faca-uma-vez.txt` · `exemplos/seis-niveis/email-cliente-v1` → `email-cliente-v2` |
 | 3 | Graba la pantalla mientras haces la tarea y di qué haces y por qué (Win+G u OBS, gratis). Entrega el video, o la transcripción con tiempos, y pide la skill. | `prompts/nivel3-grave-a-tela.txt` |
 | 4 | Guarda el contexto una sola vez, en skills pequeñas: datos, marca, definiciones. Las skills de trabajo citan esas piezas, como LEGO: si cambia el logo, lo cambias en un solo lugar. | `exemplos/seis-niveis/marca`, `definicoes`, `proposta-curta` · `modelos/` |
-| 5 | Usa skills de otras personas: el formato es un estándar abierto ([agentskills.io](https://agentskills.io)) y funciona en varias herramientas. Solo de fuentes confiables, y pídele a Claude que las revise antes. | `prompts/conferir-skill-de-fora.txt` |
+| 5 | Usa skills de otras personas: el formato es un estándar abierto ([agentskills.io](https://agentskills.io)) y suele funcionar en varias herramientas. Solo de fuentes confiables, y pídele a Claude que las revise antes. | `prompts/conferir-skill-de-fora.txt` |
 | 6 | Haz una poda de vez en cuando. Corta los PASOS (el "cómo hacerlo", que el modelo nuevo ya hace solo) y guarda lo que no tiene forma de saber: tus datos, tu marca, tus definiciones y tus correcciones. Prueba antes de cortar. | `podar.py` + `ab.py` |
 
 `podar.py` solo lee: separa, en cada `SKILL.md`, lo que es paso (candidato a cortar) de lo que es contexto (guardar). Ejecutado en la skill inflada de ejemplo (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, salida congelada en [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
@@ -87,6 +87,8 @@ dados, a marca, as definições e as correções.
 ```
 
 La prueba tiene la última palabra: ejecuta la misma tarea con y sin la skill en `ab.py`. Si el resultado sale igual o mejor sin los pasos, corta los pasos.
+
+Límite: las listas de palabras de `podar.py` están en portugués, para skills escritas en frases. Ejecutado en las 70 skills de esta máquina, terminó sin errores, pero en una skill en inglés o llena de código la mayor parte de las líneas cae en datos (cualquier número, ruta o nombre) o en neutro. Ahí solo sirve para encontrar los pasos obvios.
 
 ## La prueba (máquina de INEMA, 26/11/2026)
 

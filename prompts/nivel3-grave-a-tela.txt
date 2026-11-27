@@ -1,7 +1,6 @@
 Nível 3 — grave a tela fazendo a tarefa e entregue o vídeo ao Claude
 
-1. Grave a tela enquanto faz a tarefa do jeito de sempre. Ferramentas grátis:
-   no Windows, Win+G (barra de jogo); em qualquer sistema, o OBS Studio.
+1. Grave a tela enquanto faz a tarefa do jeito de sempre: Win+G ou OBS, grátis.
 2. Fale em voz alta o que está fazendo E por quê ("abro a planilha da semana
    porque o caixa só lança na sexta"; "tiro o desconto aqui porque esse cliente
    já tem preço fechado"). O porquê é o que vira regra na skill.

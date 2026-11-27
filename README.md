@@ -48,7 +48,7 @@ Não há versão online: o mapa precisa olhar as pastas do seu computador. Para 
 | 2 | **O mais recomendado.** Faça a tarefa uma vez com o Claude, corrija como corrigiria um estagiário e no fim peça "transforme esta sessão numa skill". Regra nova? Peça para atualizar a skill. | `prompts/faca-uma-vez.txt` · `exemplos/seis-niveis/email-cliente-v1` → `email-cliente-v2` |
 | 3 | Grave a tela fazendo a tarefa, falando o que faz e por quê (Win+G ou OBS, grátis). Entregue o vídeo, ou a transcrição com tempos, e peça a skill. | `prompts/nivel3-grave-a-tela.txt` |
 | 4 | Guarde o contexto uma vez, em skills pequenas: dados, marca, definições. As skills de trabalho citam essas peças, como LEGO: mudou o logo, muda num lugar só. | `exemplos/seis-niveis/marca`, `definicoes`, `proposta-curta` · `modelos/` |
-| 5 | Use skills de outros: o formato é um padrão aberto ([agentskills.io](https://agentskills.io)) e funciona em várias ferramentas. Só de fonte de confiança, e peça ao Claude para revisar antes. | `prompts/conferir-skill-de-fora.txt` |
+| 5 | Use skills de outros: o formato é um padrão aberto ([agentskills.io](https://agentskills.io)) e costuma funcionar em várias ferramentas. Só de fonte de confiança, e peça ao Claude para revisar antes. | `prompts/conferir-skill-de-fora.txt` |
 | 6 | Faça a poda de tempos em tempos. Corte os PASSOS (o "como fazer", que o modelo novo faz sozinho) e guarde o que ele não tem como saber: seus dados, sua marca, suas definições e suas correções. Teste antes de cortar. | `podar.py` + `ab.py` |
 
 O `podar.py` só lê: separa, em cada `SKILL.md`, o que é passo (candidato a cortar) do que é contexto (guardar). Rodado na skill inchada de exemplo (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, saída congelada em [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
@@ -87,6 +87,8 @@ dados, a marca, as definições e as correções.
 ```
 
 A palavra final é do teste: rode a mesma tarefa com e sem a skill no `ab.py`. Saiu igual ou melhor sem os passos, corte os passos.
+
+Limite: as listas de palavras do `podar.py` são em português, para skill escrita em frases. Rodado nas 70 skills desta máquina, terminou sem erro, mas em skill em inglês ou cheia de código a maior parte das linhas cai em dados (qualquer número, caminho ou nome) ou em neutro. Ali ele serve só para achar os passos óbvios.
 
 ## A prova (máquina do INEMA, 26/11/2026)
 

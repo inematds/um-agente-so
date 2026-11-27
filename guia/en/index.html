@@ -205,7 +205,7 @@
   .ab-tit{margin-top:44px;font-size:1.3rem;font-weight:800}
   #prova .tabela-wrap{margin-top:18px}
   #prova .sub{max-width:52em}
-  .pedido pre.saida{white-space:pre;overflow-x:auto;overflow-wrap:normal;font-size:.82rem}
+  .pedido pre.saida{white-space:pre;overflow-x:auto;overflow-wrap:normal;font-size:.875rem}
 
   /* perguntas */
   .faq{margin-top:26px;border-top:1px solid var(--line)}
@@ -638,7 +638,7 @@ I want to work with ONE main agent and many skills, instead of one agent folder 
       <tr><th>2. Do it once</th><td>Do the task once with Claude and correct it as you would correct an intern. At the end, ask: "turn this session into a skill". Did a new rule come up? Ask it to update the skill.</td><td>prompts/faca-uma-vez.txt · email v1 → v2 in exemplos/seis-niveis</td></tr>
       <tr><th>3. Record your screen</th><td>Record your screen while you do the task, and say what you are doing and why. Use Win+G on Windows or OBS, both free. Hand over the video, or the timestamped transcript, and ask for the skill.</td><td>prompts/nivel3-grave-a-tela.txt</td></tr>
       <tr><th>4. LEGO bricks</th><td>Store your data, your brand and your definitions (what "priority client" means to you) once, in small skills. Your work skills use these bricks: if your logo changes, you change it in only one place.</td><td>marca, definicoes and proposta-curta in exemplos/seis-niveis</td></tr>
-      <tr><th>5. Other people's skills</th><td>The format is an open standard and works in several tools. Install only from sources you trust, and ask Claude to review the skill first: it may include a program.</td><td>prompts/conferir-skill-de-fora.txt</td></tr>
+      <tr><th>5. Other people's skills</th><td>The format is an open standard and usually works in several tools. Install only from sources you trust, and ask Claude to review the skill first: it may include a program.</td><td>prompts/conferir-skill-de-fora.txt</td></tr>
       <tr><th>6. Pruning</th><td>From time to time, cut the steps, the "how to do it" that the new model already does on its own. Keep what it has no way of knowing: your data, your brand, your definitions and your corrections. Test before you cut.</td><td>podar.py + ab.py</td></tr>
     </tbody>
   </table>

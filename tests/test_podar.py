@@ -93,6 +93,16 @@ class TestExemplos(unittest.TestCase):
         self.assertGreater(r["pct_passo"], 50)
         self.assertGreater(r["guardar"], 0)
 
+    def test_neutro_fica_fora_da_porcentagem(self):
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "SKILL.md"
+            f.write_text("- Leia o pedido.\n- Nunca prometa prazo.\n"
+                         "- Uma frase qualquer.\n- Outra frase solta.\n")
+            r = podar.analisar(str(f))
+        self.assertEqual(r["contagem"]["neutro"], 2)
+        self.assertEqual(r["contadas"], 2)
+        self.assertEqual(r["pct_passo"], 50)
+
     def test_saida_congelada_bate(self):
         r = rodar(INCHADA)
         self.assertEqual(r.returncode, 0, r.stderr)

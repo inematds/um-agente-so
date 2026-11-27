@@ -48,7 +48,7 @@ There is no online version: the map needs to look at the folders on your compute
 | 2 | **The most recommended.** Do the task once with Claude, correct it as you would correct an intern, and at the end ask "turn this session into a skill". New rule? Ask it to update the skill. | `prompts/faca-uma-vez.txt` · `exemplos/seis-niveis/email-cliente-v1` → `email-cliente-v2` |
 | 3 | Record your screen while you do the task, and say what you do and why (Win+G or OBS, free). Hand over the video, or the transcript with timestamps, and ask for the skill. | `prompts/nivel3-grave-a-tela.txt` |
 | 4 | Store your context once, in small skills: data, brand, definitions. Your work skills cite these pieces, like LEGO: when the logo changes, you change it in one place only. | `exemplos/seis-niveis/marca`, `definicoes`, `proposta-curta` · `modelos/` |
-| 5 | Use other people's skills: the format is an open standard ([agentskills.io](https://agentskills.io)) and works in several tools. Use only trusted sources, and ask Claude to review them first. | `prompts/conferir-skill-de-fora.txt` |
+| 5 | Use other people's skills: the format is an open standard ([agentskills.io](https://agentskills.io)) and usually works in several tools. Use only trusted sources, and ask Claude to review them first. | `prompts/conferir-skill-de-fora.txt` |
 | 6 | Prune from time to time. Cut the STEPS (the "how to do it", which a new model does on its own) and keep what it has no way of knowing: your data, your brand, your definitions, and your corrections. Test before you cut. | `podar.py` + `ab.py` |
 
 `podar.py` only reads: in each `SKILL.md`, it separates steps (candidates to cut) from context (keep). Here it is, run on the bloated example skill (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, frozen output in [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
@@ -87,6 +87,8 @@ dados, a marca, as definições e as correções.
 ```
 
 The test has the final word: run the same task with and without the skill in `ab.py`. If the result is the same or better without the steps, cut the steps.
+
+Limit: the word lists in `podar.py` are in Portuguese, for skills written in sentences. Run on the 70 skills on this machine, it finished without errors, but in skills written in English or full of code, most lines fall into data (any number, path or name) or neutral. There it only helps find the obvious steps.
 
 ## The proof (INEMA machine, 26/11/2026)
 
