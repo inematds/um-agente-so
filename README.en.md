@@ -40,6 +40,54 @@ There is no online version: the map needs to look at the folders on your compute
 3. **Skills are born from the work.** Do the task once with Claude, correct it the way you would correct an intern and ask for it to become a skill (`prompts/faca-uma-vez.txt`). A skill doesn't have to be a list of steps: it can be a database, brand material or a single sentence.
 4. **Test without skills from time to time.** The Claude Code team removed more than 80% of the system prompt on the new models without losing quality. An old instruction can hold the new model back. `ab.py` shows whether your skill still wins.
 
+## The 6 levels of giving skills to your agent
+
+| level | what to do | kit file |
+|---|---|---|
+| 1 | Ask Claude to write the skill with skill-creator (Anthropic's official skill), and attach 2 or 3 examples of your own. Add this to your general instructions: "always use skill-creator when I ask for a skill". | `prompts/nivel1-peca-ao-claude.txt` |
+| 2 | **The most recommended.** Do the task once with Claude, correct it as you would correct an intern, and at the end ask "turn this session into a skill". New rule? Ask it to update the skill. | `prompts/faca-uma-vez.txt` · `exemplos/seis-niveis/email-cliente-v1` → `email-cliente-v2` |
+| 3 | Record your screen while you do the task, and say what you do and why (Win+G or OBS, free). Hand over the video, or the transcript with timestamps, and ask for the skill. | `prompts/nivel3-grave-a-tela.txt` |
+| 4 | Store your context once, in small skills: data, brand, definitions. Your work skills cite these pieces, like LEGO: when the logo changes, you change it in one place only. | `exemplos/seis-niveis/marca`, `definicoes`, `proposta-curta` · `modelos/` |
+| 5 | Use other people's skills: the format is an open standard ([agentskills.io](https://agentskills.io)) and works in several tools. Use only trusted sources, and ask Claude to review them first. | `prompts/conferir-skill-de-fora.txt` |
+| 6 | Prune from time to time. Cut the STEPS (the "how to do it", which a new model does on its own) and keep what it has no way of knowing: your data, your brand, your definitions, and your corrections. Test before you cut. | `podar.py` + `ab.py` |
+
+`podar.py` only reads: in each `SKILL.md`, it separates steps (candidates to cut) from context (keep). Here it is, run on the bloated example skill (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, frozen output in [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
+
+```text
+podar.py — PASSO (como fazer) × GUARDAR (o que só você sabe)
+
+exemplos/seis-niveis/relatorio-inchado/SKILL.md  (skill: relatorio-semanal)
+  27 linhas de instrução lidas
+  PASSO (como fazer, candidato a cortar)   21  (78% de 27)
+  GUARDAR (o modelo não sabe)               6
+    correção 2 · definição 1 · marca 1 · dados 2
+  neutro (fora da conta)                    0
+
+  Passos:
+    L9   Primeiro, leia com atenção todo o material que eu colar.
+    L10  Depois, separe os pedidos por cliente.
+    L11  Organize as informações em ordem de importância.
+    L12  Pense passo a passo antes de escrever qualquer coisa.
+    L13  Identifique os pontos principais de cada pedido.
+    L14  Escreva um título claro no topo do relatório.
+    … e mais 15 (use --todos)
+
+  Guardar:
+    L31  [correção] Seja objetivo e evite enrolação.
+    L37  [dados] Os pedidos da semana estão em pedidos/semana.csv.
+    L38  [dados] Mande para a Marta (dona da loja), não para o cai…
+    L39  [definição] "Pedido parado" significa sem resposta do cli…
+    L40  [correção] Nunca mostre o valor que cada cliente deve; só…
+    L41  [marca] Cores do gráfico: verde #0E7C66 para pago, cinza …
+
+Recomendação: não corte no escuro. Rode a mesma tarefa com e sem
+a skill (python3 ab.py "<tarefa>" --pasta <projeto>) e compare.
+Saiu igual ou melhor sem os passos? Corte os passos e guarde os
+dados, a marca, as definições e as correções.
+```
+
+The test has the final word: run the same task with and without the skill in `ab.py`. If the result is the same or better without the steps, cut the steps.
+
 ## The proof (INEMA machine, 26/11/2026)
 
 | | |
@@ -74,16 +122,29 @@ python3 ab.py --chave resultado-ab                 # only after choosing the bes
 
 `ab.py` options: `--tarefa-arquivo`, `--pasta`, `--saida` (default `resultado-ab`), `--modelo`, `--teto` (seconds per run, default 600), `--semente`, `--chave <folder>`.
 
+To see what you can prune in a skill (it only reads, it changes nothing):
+
+```bash
+python3 podar.py ~/.claude/skills/minha-skill/SKILL.md
+python3 podar.py ~/.claude/skills --json          # all skills in the folder, as JSON
+```
+
+`podar.py` options: one or more `SKILL.md` files or folders, `--json`, `--max <n>` (excerpts per list, default 6), `--todos`.
+
 ### What's in here
 
 | file | what |
 |---|---|
 | `mapa.py` | counts the folders with CLAUDE.md/AGENTS.md (your "agents"), lists skills by type, finds descriptions that are too short and rules repeated across folders. Read-only, no AI and no internet |
+| `podar.py` | reads one or more `SKILL.md` files and separates STEP (the "how to do it", a candidate to cut) from KEEP (data, brand, definitions, corrections). Read-only, no AI and no internet. The heuristic is explained at the top of the file |
 | `ab.py` | runs the same task with your skills and with `--disable-slash-commands` (no skills), randomizes A/B and stores the key separately |
 | `modelos/` | the 4 types of skill: procedure, database (points to your data), artifact (brand and layout) and definition (one sentence) |
 | `prompts/juntar-agentes.txt` (in Portuguese) | plan to replace several agent folders with one main agent + skills (deletes nothing) |
+| `prompts/nivel1-peca-ao-claude.txt` (in Portuguese) | level 1: ask skill-creator for the skill and attach 2 or 3 examples of your own |
+| `prompts/nivel3-grave-a-tela.txt` (in Portuguese) | level 3: record your screen while you do the task, narrate the why, and hand it to Claude |
 | `prompts/faca-uma-vez.txt` (in Portuguese) | do the task once with Claude and turn the session into a skill with skill-creator |
 | `prompts/conferir-skill-de-fora.txt` (in Portuguese) | before installing a third-party skill: what it does, whether it accesses the internet or passwords, or deletes files |
+| `exemplos/seis-niveis/` | examples of the levels: email v1 → v2 (accumulated corrections), brand + definitions + a proposal that cites both (LEGO), a bloated skill, and the output of `podar.py` |
 | `exemplos/prova-real.md` (in Portuguese) | the kit run on the INEMA machine: 525 agent folders, 119 skills, a rule repeated in 73 folders, A/B test |
 | `guia/` | the PT/EN/ES guide (GitHub Pages) |
 
@@ -103,7 +164,8 @@ python3 -m unittest discover -s tests
 6. 🧠🤖 A new task becomes a skill: `prompts/faca-uma-vez.txt` + Skill Creator; the `modelos/` serve as a starting point.
 7. ⚙️ Blind test of a task: `python3 ab.py "<task>" --pasta <project>` (two responses through the subscription).
 8. 🧠 You read A and B, choose and write down why; only then `python3 ab.py --chave resultado-ab`.
-9. 🧠 A skill that ties or loses: rewrite it or remove it. Repeat from time to time, with each new model.
+9. ⚙️ Pruning (read-only): `python3 podar.py <pasta-de-skills>` points out the steps that a new model may already do on its own.
+10. 🧠 A skill that ties or loses in `ab.py`: cut the steps and keep data, brand, definitions, and corrections; or remove the skill. Repeat from time to time, with each new model.
 
 ## Based on (Anthropic)
 

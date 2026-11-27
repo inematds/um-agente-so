@@ -205,6 +205,7 @@
   .ab-tit{margin-top:44px;font-size:1.3rem;font-weight:800}
   #prova .tabela-wrap{margin-top:18px}
   #prova .sub{max-width:52em}
+  .pedido pre.saida{white-space:pre;overflow-x:auto;overflow-wrap:normal;font-size:.82rem}
 
   /* perguntas */
   .faq{margin-top:26px;border-top:1px solid var(--line)}
@@ -263,7 +264,7 @@
     <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
   </span>
   <nav class="menu" aria-label="Secciones">
-    <a href="#jeitos">3 partes</a><a href="#importantes">Dudas</a><a href="#comecar">En la práctica</a><a href="#video">Video</a><a href="#prova">Medido</a>
+    <a href="#jeitos">3 partes</a><a href="#importantes">Dudas</a><a href="#comecar">En la práctica</a><a href="#video">Video</a><a href="#prova">Medido</a><a href="#niveis">6 niveles</a>
   </nav>
   <span class="lang" aria-label="Idioma">
     <a href="../" hreflang="pt-BR">PT</a>
@@ -540,7 +541,7 @@
       <h3>Necesitas</h3>
       <ul class="lista sim">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><strong>Una computadora con Claude Code o Codex.</strong><span>Y la suscripción de uno de ellos. Probado el 26/11/2026 en una computadora con Linux y Claude Code.</span></div></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><strong>Python 3.</strong><span>Los dos programitas del kit lo usan. Si falta, la propia IA lo instala.</span></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><strong>Python 3.</strong><span>Los tres programitas del kit lo usan. Si falta, la propia IA lo instala.</span></div></li>
       </ul>
     </div>
     <div class="bloco">
@@ -624,6 +625,61 @@ Quiero trabajar con UN agente principal y muchas skills, en vez de una carpeta d
   <p class="sub">Empate, según nuestra lectura de las dos respuestas (una ronda, 26/11/2026), y la skill antigua ni siquiera se siguió: candidata a salir o a reescribirse. Las dos respuestas completas están en <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos" target="_blank" rel="noopener">GitHub, en exemplos/</a>.</p>
 </div></section>
 
+<!-- ========== OS 6 NÍVEIS ========== -->
+<section id="niveis"><div class="wrap">
+  <p class="kicker">Los 6 niveles</p>
+  <h2>El agente ya es inteligente. Lo que falta es tu forma de trabajar.</h2>
+  <p class="sub">Seis maneras de enseñarle esa forma al agente, de la más fácil a la más fina. El nivel 2 es el más recomendado. Cada uno tiene su archivo en el kit.</p>
+  <div class="tabela-wrap">
+  <table class="tabela">
+    <thead><tr><th>Nivel</th><th>Qué haces tú</th><th>En el kit</th></tr></thead>
+    <tbody>
+      <tr><th>1. Pídeselo a Claude</th><td>Pide la skill a skill-creator, la skill oficial de Anthropic para crear skills, y adjunta 2 o 3 ejemplos tuyos que hayan salido bien. En las instrucciones generales, agrega una línea: "usa siempre skill-creator cuando te pida una skill".</td><td>prompts/nivel1-peca-ao-claude.txt</td></tr>
+      <tr><th>2. Hazlo una vez</th><td>Haz la tarea una vez con Claude y corrígelo como corregirías a un practicante. Al final, pide: "convierte esta sesión en una skill". ¿Apareció una regla nueva? Pide que actualice la skill.</td><td>prompts/faca-uma-vez.txt · e-mail v1 → v2 en exemplos/seis-niveis</td></tr>
+      <tr><th>3. Graba la pantalla</th><td>Graba la pantalla mientras haces la tarea y di en voz alta qué haces y por qué. Win+G en Windows u OBS, los dos gratis. Entrega el video, o la transcripción con los tiempos, y pide la skill.</td><td>prompts/nivel3-grave-a-tela.txt</td></tr>
+      <tr><th>4. Piezas de LEGO</th><td>Guarda una sola vez, en skills pequeñas, tus datos, tu marca y tus definiciones (qué es un "cliente prioritario" para ti). Las skills de trabajo usan esas piezas: si cambia el logo, lo cambias en un solo lugar.</td><td>marca, definicoes y proposta-curta en exemplos/seis-niveis</td></tr>
+      <tr><th>5. Skills de otros</th><td>El formato es un estándar abierto y funciona en varias herramientas. Instala solo desde fuentes de confianza y antes pide a Claude que revise la skill: puede traer un programa.</td><td>prompts/conferir-skill-de-fora.txt</td></tr>
+      <tr><th>6. Poda</th><td>Cada cierto tiempo, corta los pasos, ese "cómo hacerlo" que el modelo nuevo ya hace solo. Conserva lo que no tiene forma de saber: tus datos, tu marca, tus definiciones y tus correcciones. Prueba antes de cortar.</td><td>podar.py + ab.py</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3 class="ab-tit">La poda, en una skill de ejemplo escrita para un modelo antiguo</h3>
+  <p class="sub">Hicimos una skill de informe semanal llena de pasos, como se escribía para los modelos antiguos, y le pasamos podar.py. Solo lee: no cambia ningún archivo.</p>
+  <div class="pedido">
+    <div class="pedido-barra"><p>Salida de podar.py, sin retoques y en portugués, tal como la imprime (exemplos/seis-niveis/saida-podar.txt).</p></div>
+<pre class="saida">podar.py — PASSO (como fazer) × GUARDAR (o que só você sabe)
+
+exemplos/seis-niveis/relatorio-inchado/SKILL.md  (skill: relatorio-semanal)
+  27 linhas de instrução lidas
+  PASSO (como fazer, candidato a cortar)   21  (78% de 27)
+  GUARDAR (o modelo não sabe)               6
+    correção 2 · definição 1 · marca 1 · dados 2
+  neutro (fora da conta)                    0
+
+  Passos:
+    L9   Primeiro, leia com atenção todo o material que eu colar.
+    L10  Depois, separe os pedidos por cliente.
+    L11  Organize as informações em ordem de importância.
+    L12  Pense passo a passo antes de escrever qualquer coisa.
+    L13  Identifique os pontos principais de cada pedido.
+    L14  Escreva um título claro no topo do relatório.
+    … e mais 15 (use --todos)
+
+  Guardar:
+    L31  [correção] Seja objetivo e evite enrolação.
+    L37  [dados] Os pedidos da semana estão em pedidos/semana.csv.
+    L38  [dados] Mande para a Marta (dona da loja), não para o cai…
+    L39  [definição] "Pedido parado" significa sem resposta do cli…
+    L40  [correção] Nunca mostre o valor que cada cliente deve; só…
+    L41  [marca] Cores do gráfico: verde #0E7C66 para pago, cinza …
+
+Recomendação: não corte no escuro. Rode a mesma tarefa com e sem
+a skill (python3 ab.py "&lt;tarefa&gt;" --pasta &lt;projeto&gt;) e compare.
+Saiu igual ou melhor sem os passos? Corte os passos e guarde os
+dados, a marca, as definições e as correções.</pre>
+  </div>
+  <p class="sub">21 de las 27 líneas son pasos: candidatas a salir. De las 6 que quedan, 5 son lo que el modelo no tiene forma de saber: dónde está la hoja de cálculo de la semana, a quién enviar el informe, qué es un "pedido detenido", qué no mostrar nunca y los colores del gráfico. La sexta, "evite enrolação" (evita el relleno), entró como corrección solo por la palabra "evite" (evita). podar.py es una lista de palabras, no un juez: la última palabra la tiene la prueba a ciegas, la misma tarea con y sin la skill. ¿Salió igual o mejor sin los pasos? Corta los pasos.</p>
+</div></section>
 <!-- ========== PERGUNTAS ========== -->
 <section id="perguntas"><div class="wrap"><div class="col">
   <p class="kicker">Preguntas</p>

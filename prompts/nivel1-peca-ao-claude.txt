@@ -1,0 +1,19 @@
+Nível 1 — peça ao Claude para escrever a skill (com o skill-creator)
+
+Anexe de 2 a 3 exemplos seus, os melhores que você já fez dessa tarefa
+(e-mails que deram certo, propostas aprovadas, relatórios que a pessoa elogiou).
+
+--- cole isto ---
+Use o skill-creator (a skill oficial da Anthropic para criar skills) e escreva uma skill
+para esta tarefa: <descreva a tarefa em uma frase>.
+Anexei <2 ou 3> exemplos meus que deram certo. Tire deles o que é meu e o modelo não tem
+como saber: dados, nomes, tom, formato, o que eu nunca faço. Não encha a skill de passos
+genéricos ("leia com atenção", "revise o texto").
+A descrição da skill diz em uma frase QUANDO ela deve ser usada.
+Antes de gravar, me mostre a skill e espere o meu sim.
+--- fim ---
+
+Para não ter de lembrar toda vez, ponha esta linha nas suas instruções gerais
+(CLAUDE.md principal, ou as instruções do seu perfil no app):
+
+Sempre use o skill-creator quando eu pedir uma skill.

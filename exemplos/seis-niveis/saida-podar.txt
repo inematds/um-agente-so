@@ -1,0 +1,30 @@
+podar.py — PASSO (como fazer) × GUARDAR (o que só você sabe)
+
+exemplos/seis-niveis/relatorio-inchado/SKILL.md  (skill: relatorio-semanal)
+  27 linhas de instrução lidas
+  PASSO (como fazer, candidato a cortar)   21  (78% de 27)
+  GUARDAR (o modelo não sabe)               6
+    correção 2 · definição 1 · marca 1 · dados 2
+  neutro (fora da conta)                    0
+
+  Passos:
+    L9   Primeiro, leia com atenção todo o material que eu colar.
+    L10  Depois, separe os pedidos por cliente.
+    L11  Organize as informações em ordem de importância.
+    L12  Pense passo a passo antes de escrever qualquer coisa.
+    L13  Identifique os pontos principais de cada pedido.
+    L14  Escreva um título claro no topo do relatório.
+    … e mais 15 (use --todos)
+
+  Guardar:
+    L31  [correção] Seja objetivo e evite enrolação.
+    L37  [dados] Os pedidos da semana estão em pedidos/semana.csv.
+    L38  [dados] Mande para a Marta (dona da loja), não para o cai…
+    L39  [definição] "Pedido parado" significa sem resposta do cli…
+    L40  [correção] Nunca mostre o valor que cada cliente deve; só…
+    L41  [marca] Cores do gráfico: verde #0E7C66 para pago, cinza …
+
+Recomendação: não corte no escuro. Rode a mesma tarefa com e sem
+a skill (python3 ab.py "<tarefa>" --pasta <projeto>) e compare.
+Saiu igual ou melhor sem os passos? Corte os passos e guarde os
+dados, a marca, as definições e as correções.

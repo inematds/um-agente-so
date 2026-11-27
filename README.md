@@ -40,6 +40,54 @@ Não há versão online: o mapa precisa olhar as pastas do seu computador. Para 
 3. **Skill nasce do trabalho.** Faça a tarefa uma vez com o Claude, corrija como corrigiria um estagiário e peça para virar skill (`prompts/faca-uma-vez.txt`). Skill não precisa ser lista de passos: pode ser um banco de dados, um material de marca ou uma frase.
 4. **Teste sem skills de tempos em tempos.** A equipe do Claude Code tirou mais de 80% do prompt de sistema nos modelos novos sem perder qualidade. Instrução antiga pode segurar o modelo novo. `ab.py` mostra se a sua skill ainda ganha.
 
+## Os 6 níveis para dar skills ao seu agente
+
+| nível | o que fazer | arquivo do kit |
+|---|---|---|
+| 1 | Peça ao Claude para escrever a skill com o skill-creator (a skill oficial da Anthropic), anexando 2 ou 3 exemplos seus. Ponha nas instruções gerais: "sempre use o skill-creator quando eu pedir uma skill". | `prompts/nivel1-peca-ao-claude.txt` |
+| 2 | **O mais recomendado.** Faça a tarefa uma vez com o Claude, corrija como corrigiria um estagiário e no fim peça "transforme esta sessão numa skill". Regra nova? Peça para atualizar a skill. | `prompts/faca-uma-vez.txt` · `exemplos/seis-niveis/email-cliente-v1` → `email-cliente-v2` |
+| 3 | Grave a tela fazendo a tarefa, falando o que faz e por quê (Win+G ou OBS, grátis). Entregue o vídeo, ou a transcrição com tempos, e peça a skill. | `prompts/nivel3-grave-a-tela.txt` |
+| 4 | Guarde o contexto uma vez, em skills pequenas: dados, marca, definições. As skills de trabalho citam essas peças, como LEGO: mudou o logo, muda num lugar só. | `exemplos/seis-niveis/marca`, `definicoes`, `proposta-curta` · `modelos/` |
+| 5 | Use skills de outros: o formato é um padrão aberto ([agentskills.io](https://agentskills.io)) e funciona em várias ferramentas. Só de fonte de confiança, e peça ao Claude para revisar antes. | `prompts/conferir-skill-de-fora.txt` |
+| 6 | Faça a poda de tempos em tempos. Corte os PASSOS (o "como fazer", que o modelo novo faz sozinho) e guarde o que ele não tem como saber: seus dados, sua marca, suas definições e suas correções. Teste antes de cortar. | `podar.py` + `ab.py` |
+
+O `podar.py` só lê: separa, em cada `SKILL.md`, o que é passo (candidato a cortar) do que é contexto (guardar). Rodado na skill inchada de exemplo (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, saída congelada em [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
+
+```text
+podar.py — PASSO (como fazer) × GUARDAR (o que só você sabe)
+
+exemplos/seis-niveis/relatorio-inchado/SKILL.md  (skill: relatorio-semanal)
+  27 linhas de instrução lidas
+  PASSO (como fazer, candidato a cortar)   21  (78% de 27)
+  GUARDAR (o modelo não sabe)               6
+    correção 2 · definição 1 · marca 1 · dados 2
+  neutro (fora da conta)                    0
+
+  Passos:
+    L9   Primeiro, leia com atenção todo o material que eu colar.
+    L10  Depois, separe os pedidos por cliente.
+    L11  Organize as informações em ordem de importância.
+    L12  Pense passo a passo antes de escrever qualquer coisa.
+    L13  Identifique os pontos principais de cada pedido.
+    L14  Escreva um título claro no topo do relatório.
+    … e mais 15 (use --todos)
+
+  Guardar:
+    L31  [correção] Seja objetivo e evite enrolação.
+    L37  [dados] Os pedidos da semana estão em pedidos/semana.csv.
+    L38  [dados] Mande para a Marta (dona da loja), não para o cai…
+    L39  [definição] "Pedido parado" significa sem resposta do cli…
+    L40  [correção] Nunca mostre o valor que cada cliente deve; só…
+    L41  [marca] Cores do gráfico: verde #0E7C66 para pago, cinza …
+
+Recomendação: não corte no escuro. Rode a mesma tarefa com e sem
+a skill (python3 ab.py "<tarefa>" --pasta <projeto>) e compare.
+Saiu igual ou melhor sem os passos? Corte os passos e guarde os
+dados, a marca, as definições e as correções.
+```
+
+A palavra final é do teste: rode a mesma tarefa com e sem a skill no `ab.py`. Saiu igual ou melhor sem os passos, corte os passos.
+
 ## A prova (máquina do INEMA, 26/11/2026)
 
 | | |
@@ -74,16 +122,29 @@ python3 ab.py --chave resultado-ab                 # só depois de escolher a me
 
 Opções do `ab.py`: `--tarefa-arquivo`, `--pasta`, `--saida` (padrão `resultado-ab`), `--modelo`, `--teto` (segundos por rodada, padrão 600), `--semente`, `--chave <pasta>`.
 
+Para ver o que podar numa skill (só lê, não altera nada):
+
+```bash
+python3 podar.py ~/.claude/skills/minha-skill/SKILL.md
+python3 podar.py ~/.claude/skills --json          # todas as skills da pasta, em JSON
+```
+
+Opções do `podar.py`: um ou mais `SKILL.md` ou pastas, `--json`, `--max <n>` (trechos por lista, padrão 6), `--todos`.
+
 ### O que tem aqui
 
 | arquivo | o quê |
 |---|---|
 | `mapa.py` | conta as pastas com CLAUDE.md/AGENTS.md (seus "agentes"), lista as skills por tipo, acha descrições curtas demais e regras repetidas entre pastas. Só leitura, sem IA e sem internet |
+| `podar.py` | lê um ou mais `SKILL.md` e separa PASSO (o "como fazer", candidato a cortar) de GUARDAR (dados, marca, definições, correções). Só leitura, sem IA e sem internet. A heurística está explicada no topo do arquivo |
 | `ab.py` | roda a mesma tarefa com as suas skills e com `--disable-slash-commands` (nenhuma skill), sorteia A/B e guarda a chave à parte |
 | `modelos/` | os 4 tipos de skill: procedimento, banco (aponta para os seus dados), artefato (marca e layout) e definição (uma frase) |
 | `prompts/juntar-agentes.txt` | plano para trocar várias pastas de agente por um agente principal + skills (não apaga nada) |
+| `prompts/nivel1-peca-ao-claude.txt` | nível 1: peça a skill ao skill-creator anexando 2 ou 3 exemplos seus |
+| `prompts/nivel3-grave-a-tela.txt` | nível 3: grave a tela fazendo a tarefa, narrando o porquê, e entregue ao Claude |
 | `prompts/faca-uma-vez.txt` | faça a tarefa uma vez com o Claude e transforme a sessão em skill com o skill-creator |
 | `prompts/conferir-skill-de-fora.txt` | antes de instalar skill de terceiros: o que ela faz, se acessa internet, senhas ou apaga arquivos |
+| `exemplos/seis-niveis/` | exemplos dos níveis: e-mail v1 → v2 (correções acumuladas), marca + definições + proposta que cita as duas (LEGO), uma skill inchada e a saída do `podar.py` |
 | `exemplos/prova-real.md` | o kit rodado na máquina do INEMA: 525 pastas de agente, 119 skills, regra repetida em 73 pastas, teste A/B |
 | `guia/` | o guia PT/EN/ES (GitHub Pages) |
 
@@ -103,7 +164,8 @@ python3 -m unittest discover -s tests
 6. 🧠🤖 Tarefa nova vira skill: `prompts/faca-uma-vez.txt` + Skill Creator; os `modelos/` servem de ponto de partida.
 7. ⚙️ Teste às cegas de uma tarefa: `python3 ab.py "<tarefa>" --pasta <projeto>` (duas respostas pela assinatura).
 8. 🧠 Você lê A e B, escolhe e anota o porquê; só depois `python3 ab.py --chave resultado-ab`.
-9. 🧠 Skill que empata ou perde: reescreva ou tire. Repita de tempos em tempos, a cada modelo novo.
+9. ⚙️ Poda (só leitura): `python3 podar.py <pasta-de-skills>` aponta os passos que o modelo novo pode já fazer sozinho.
+10. 🧠 Skill que empata ou perde no `ab.py`: corte os passos e guarde dados, marca, definições e correções; ou tire a skill. Repita de tempos em tempos, a cada modelo novo.
 
 ## Baseado em (Anthropic)
 

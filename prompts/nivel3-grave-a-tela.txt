@@ -1,0 +1,18 @@
+Nível 3 — grave a tela fazendo a tarefa e entregue o vídeo ao Claude
+
+1. Grave a tela enquanto faz a tarefa do jeito de sempre. Ferramentas grátis:
+   no Windows, Win+G (barra de jogo); em qualquer sistema, o OBS Studio.
+2. Fale em voz alta o que está fazendo E por quê ("abro a planilha da semana
+   porque o caixa só lança na sexta"; "tiro o desconto aqui porque esse cliente
+   já tem preço fechado"). O porquê é o que vira regra na skill.
+3. Entregue ao Claude o vídeo ou, se ele não aceitar vídeo, a transcrição com
+   os tempos (qualquer transcritor que marque minuto e segundo serve).
+
+--- cole isto junto com o vídeo ou a transcrição ---
+Este é um vídeo (ou a transcrição com tempos) de mim fazendo <a tarefa>, falando
+o que faço e por quê. Transforme isso numa skill com o skill-creator.
+Guarde o que é meu: nomes de arquivos, pessoas, valores, regras e os porquês que eu falei.
+Não copie cada clique como passo; o modelo sabe usar as ferramentas.
+Se algum trecho ficou sem porquê, me pergunte em vez de inventar.
+Cite o tempo do vídeo de onde saiu cada regra. Antes de gravar, me mostre e espere o meu sim.
+--- fim ---
