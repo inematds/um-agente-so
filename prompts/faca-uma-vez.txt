@@ -1,3 +1,4 @@
 Vamos fazer esta tarefa juntos, uma vez. Observe cada correção que eu fizer.
 No fim, transforme esta sessão numa skill usando o skill-creator: passos, correções e um exemplo do resultado aprovado.
 A descrição da skill diz em uma frase QUANDO ela deve ser usada.
+Quando eu disser "regra nova: …", atualize a skill com ela.

@@ -42,14 +42,22 @@ There is no online version: the map needs to look at the folders on your compute
 
 ## The 6 levels of giving skills to your agent
 
+Do you explain the same thing to the AI every week? The agent is already smart; what it lacks is your way of working.
+
 | level | what to do | kit file |
 |---|---|---|
-| 1 | Ask Claude to write the skill with skill-creator (Anthropic's official skill), and attach 2 or 3 examples of your own. Add this to your general instructions: "always use skill-creator when I ask for a skill". | `prompts/nivel1-peca-ao-claude.txt` |
-| 2 | **The most recommended.** Do the task once with Claude, correct it as you would correct an intern, and at the end ask "turn this session into a skill". New rule? Ask it to update the skill. | `prompts/faca-uma-vez.txt` · `exemplos/seis-niveis/email-cliente-v1` → `email-cliente-v2` |
-| 3 | Record your screen while you do the task, and say what you do and why (Win+G or OBS, free). Hand over the video, or the transcript with timestamps, and ask for the skill. | `prompts/nivel3-grave-a-tela.txt` |
-| 4 | Store your context once, in small skills: data, brand, definitions. Your work skills cite these pieces, like LEGO: when the logo changes, you change it in one place only. | `exemplos/seis-niveis/marca`, `definicoes`, `proposta-curta` · `modelos/` |
-| 5 | Use other people's skills: the format is an open standard ([agentskills.io](https://agentskills.io)) and usually works in several tools. Use only trusted sources, and ask Claude to review them first. | `prompts/conferir-skill-de-fora.txt` |
-| 6 | Prune from time to time. Cut the STEPS (the "how to do it", which a new model does on its own) and keep what it has no way of knowing: your data, your brand, your definitions, and your corrections. Test before you cut. | `podar.py` + `ab.py` |
+| 1 | Ask Claude to write the skill with skill-creator (Anthropic's official skill), and attach 2 or 3 examples of your own. Add this to your general instructions: "always use skill-creator when I ask for a skill". If it isn't installed, ask Claude to install it from Anthropic's official skills repository (github.com/anthropics/skills). | [`prompts/nivel1-peca-ao-claude.txt`](prompts/nivel1-peca-ao-claude.txt) |
+| 2 | **The most recommended.** Do the task once with Claude, correct it as you would correct an intern, and at the end ask "turn this session into a skill". New rule? Ask it to update the skill. | [`prompts/faca-uma-vez.txt`](prompts/faca-uma-vez.txt) · [`exemplos/seis-niveis/email-cliente-v1`](exemplos/seis-niveis/email-cliente-v1) → [`email-cliente-v2`](exemplos/seis-niveis/email-cliente-v2) |
+| 3 | Record your screen while you do the task, and say what you do and why (Win+G or OBS, free). Hand over the video, or the transcript with timestamps, and ask for the skill. | [`prompts/nivel3-grave-a-tela.txt`](prompts/nivel3-grave-a-tela.txt) |
+| 4 | Store your context once, in small skills: data, brand, definitions. Your work skills cite these pieces, like LEGO: when the logo changes, you change it in one place only. | [`exemplos/seis-niveis/marca`](exemplos/seis-niveis/marca), [`definicoes`](exemplos/seis-niveis/definicoes), [`proposta-curta`](exemplos/seis-niveis/proposta-curta) · [`modelos/`](modelos) |
+| 5 | Use other people's skills: the format is an open standard ([agentskills.io](https://agentskills.io)) and usually works in several tools. Use only trusted sources, and ask Claude to review them first. | [`prompts/conferir-skill-de-fora.txt`](prompts/conferir-skill-de-fora.txt) |
+| 6 | Prune from time to time. Cut the STEPS (the "how to do it", which a new model does on its own) and keep what it has no way of knowing: your data, your brand, your definitions, and your corrections. Test before you cut. | [`podar.py`](podar.py) + [`ab.py`](ab.py) |
+
+The kit's prompts and examples are in Portuguese; ask your AI to translate them.
+
+```bash
+python3 podar.py ~/.claude/skills/<your-skill>/SKILL.md
+```
 
 `podar.py` only reads: in each `SKILL.md`, it separates steps (candidates to cut) from context (keep). Here it is, run on the bloated example skill (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, frozen output in [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
 

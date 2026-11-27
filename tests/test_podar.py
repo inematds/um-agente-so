@@ -64,10 +64,10 @@ class TestClassificar(unittest.TestCase):
 
     def test_ignora_cabecalho_titulo_e_codigo(self):
         texto = ("---\nname: x\ndescription: Nunca use isto\n---\n"
-                 "# Nunca prometa\n\n```\nnunca\n```\n- Leia o pedido.\n")
+                 "# Nunca prometa\n\n```\nnunca\n```\n<!-- nunca -->\n- Leia o pedido.\n")
         itens = list(podar.linhas_de_instrucao(texto))
         self.assertEqual([t for _, t, _ in itens], ["Leia o pedido."])
-        self.assertEqual(itens[0][0], 10)
+        self.assertEqual(itens[0][0], 11)
 
 
 class TestExemplos(unittest.TestCase):

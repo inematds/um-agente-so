@@ -42,14 +42,20 @@ Não há versão online: o mapa precisa olhar as pastas do seu computador. Para 
 
 ## Os 6 níveis para dar skills ao seu agente
 
+Você explica a mesma coisa para a IA toda semana? O agente já é inteligente; o que falta é o seu jeito de trabalhar.
+
 | nível | o que fazer | arquivo do kit |
 |---|---|---|
-| 1 | Peça ao Claude para escrever a skill com o skill-creator (a skill oficial da Anthropic), anexando 2 ou 3 exemplos seus. Ponha nas instruções gerais: "sempre use o skill-creator quando eu pedir uma skill". | `prompts/nivel1-peca-ao-claude.txt` |
-| 2 | **O mais recomendado.** Faça a tarefa uma vez com o Claude, corrija como corrigiria um estagiário e no fim peça "transforme esta sessão numa skill". Regra nova? Peça para atualizar a skill. | `prompts/faca-uma-vez.txt` · `exemplos/seis-niveis/email-cliente-v1` → `email-cliente-v2` |
-| 3 | Grave a tela fazendo a tarefa, falando o que faz e por quê (Win+G ou OBS, grátis). Entregue o vídeo, ou a transcrição com tempos, e peça a skill. | `prompts/nivel3-grave-a-tela.txt` |
-| 4 | Guarde o contexto uma vez, em skills pequenas: dados, marca, definições. As skills de trabalho citam essas peças, como LEGO: mudou o logo, muda num lugar só. | `exemplos/seis-niveis/marca`, `definicoes`, `proposta-curta` · `modelos/` |
-| 5 | Use skills de outros: o formato é um padrão aberto ([agentskills.io](https://agentskills.io)) e costuma funcionar em várias ferramentas. Só de fonte de confiança, e peça ao Claude para revisar antes. | `prompts/conferir-skill-de-fora.txt` |
-| 6 | Faça a poda de tempos em tempos. Corte os PASSOS (o "como fazer", que o modelo novo faz sozinho) e guarde o que ele não tem como saber: seus dados, sua marca, suas definições e suas correções. Teste antes de cortar. | `podar.py` + `ab.py` |
+| 1 | Peça ao Claude para escrever a skill com o skill-creator (a skill oficial da Anthropic), anexando 2 ou 3 exemplos seus. Ponha nas instruções gerais: "sempre use o skill-creator quando eu pedir uma skill". Se ela não estiver instalada, peça ao Claude para instalá-la do repositório oficial de skills da Anthropic (github.com/anthropics/skills). | [`prompts/nivel1-peca-ao-claude.txt`](prompts/nivel1-peca-ao-claude.txt) |
+| 2 | **O mais recomendado.** Faça a tarefa uma vez com o Claude, corrija como corrigiria um estagiário e no fim peça "transforme esta sessão numa skill". Regra nova? Peça para atualizar a skill. | [`prompts/faca-uma-vez.txt`](prompts/faca-uma-vez.txt) · [`exemplos/seis-niveis/email-cliente-v1`](exemplos/seis-niveis/email-cliente-v1) → [`email-cliente-v2`](exemplos/seis-niveis/email-cliente-v2) |
+| 3 | Grave a tela fazendo a tarefa, falando o que faz e por quê (Win+G ou OBS, grátis). Entregue o vídeo, ou a transcrição com tempos, e peça a skill. | [`prompts/nivel3-grave-a-tela.txt`](prompts/nivel3-grave-a-tela.txt) |
+| 4 | Guarde o contexto uma vez, em skills pequenas: dados, marca, definições. As skills de trabalho citam essas peças, como LEGO: mudou o logo, muda num lugar só. | [`exemplos/seis-niveis/marca`](exemplos/seis-niveis/marca), [`definicoes`](exemplos/seis-niveis/definicoes), [`proposta-curta`](exemplos/seis-niveis/proposta-curta) · [`modelos/`](modelos) |
+| 5 | Use skills de outros: o formato é um padrão aberto ([agentskills.io](https://agentskills.io)) e costuma funcionar em várias ferramentas. Só de fonte de confiança, e peça ao Claude para revisar antes. | [`prompts/conferir-skill-de-fora.txt`](prompts/conferir-skill-de-fora.txt) |
+| 6 | Faça a poda de tempos em tempos. Corte os PASSOS (o "como fazer", que o modelo novo faz sozinho) e guarde o que ele não tem como saber: seus dados, sua marca, suas definições e suas correções. Teste antes de cortar. | [`podar.py`](podar.py) + [`ab.py`](ab.py) |
+
+```bash
+python3 podar.py ~/.claude/skills/<sua-skill>/SKILL.md
+```
 
 O `podar.py` só lê: separa, em cada `SKILL.md`, o que é passo (candidato a cortar) do que é contexto (guardar). Rodado na skill inchada de exemplo (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, saída congelada em [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
 

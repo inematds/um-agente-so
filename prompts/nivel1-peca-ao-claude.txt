@@ -3,6 +3,9 @@ Nível 1 — peça ao Claude para escrever a skill (com o skill-creator)
 Anexe de 2 a 3 exemplos seus, os melhores que você já fez dessa tarefa
 (e-mails que deram certo, propostas aprovadas, relatórios que a pessoa elogiou).
 
+O skill-creator é a skill oficial da Anthropic para criar skills. Se ela não estiver instalada,
+peça ao Claude para instalá-la do repositório oficial de skills da Anthropic (github.com/anthropics/skills).
+
 --- cole isto ---
 Use o skill-creator (a skill oficial da Anthropic para criar skills) e escreva uma skill
 para esta tarefa: <descreva a tarefa em uma frase>.

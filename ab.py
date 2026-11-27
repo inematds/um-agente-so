@@ -29,7 +29,7 @@ import sys
 import time
 from pathlib import Path
 
-VERSAO = "0.2.0"
+VERSAO = "0.2.1"
 SEM_SKILL = ["--disable-slash-commands"]
 
 

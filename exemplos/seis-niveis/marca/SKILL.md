@@ -6,5 +6,6 @@ description: Cores, fontes e tom da Gráfica Linha Reta. Use sempre que for gera
 
 - Cores: fundo #FFFFFF, texto #1A1A22, destaque #0E7C66.
 - Fontes: títulos em Sora, corpo em Inter.
+<!-- logo.png é fictício: arquivo do exemplo, não vem no kit. Na sua skill, ponha o seu arquivo de verdade. -->
 - Logo: `logo.png` nesta pasta, no canto de cima, à esquerda.
 - Tom direto e cordial, frases curtas.

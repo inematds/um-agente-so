@@ -27,7 +27,8 @@ passo que carrega um dado seu ("Abra clientes.csv") fica no GUARDAR:
 o modelo não sabe o nome do seu arquivo.
 
 O que não entra na conta: o cabeçalho (--- name/description ---),
-títulos (#), linhas em branco e o conteúdo de blocos de código.
+títulos (#), linhas em branco, comentários <!-- --> de uma linha e o
+conteúdo de blocos de código.
 Acentos e maiúsculas não importam (o texto é normalizado antes).
 
 É heurística: uma lista de palavras, não um juiz. Antes de cortar,
@@ -48,7 +49,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-VERSAO = "0.2.0"
+VERSAO = "0.2.1"
 
 GUARDAR = ("correção", "definição", "marca", "dados")
 
@@ -127,7 +128,8 @@ def linhas_de_instrucao(texto: str):
         if bruta.startswith("```"):
             em_codigo = not em_codigo
             continue
-        if em_codigo or not bruta or bruta.startswith("#"):
+        if (em_codigo or not bruta or bruta.startswith("#")
+                or bruta.startswith("<!--")):
             continue
         if set(bruta) <= set("|-: "):
             continue

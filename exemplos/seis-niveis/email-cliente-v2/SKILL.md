@@ -6,6 +6,7 @@ description: Responde e-mail de cliente da Gráfica Linha Reta (orçamento, pedi
 
 - Responda no mesmo assunto do e-mail do cliente.
 - Assine como "Rita, Gráfica Linha Reta".
+<!-- precos.csv é fictício: arquivo do exemplo, não vem no kit. Na sua skill, ponha o seu arquivo de verdade. -->
 - Tabela de preços atual: `precos.csv` nesta pasta.
 - Feche com o telefone da loja: (51) 3000-0000.
 

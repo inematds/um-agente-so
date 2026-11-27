@@ -310,6 +310,7 @@
     <li><b>do it once, make it a skill</b>: a task that went well becomes a skill, with four templates;</li>
     <li><b>test without skills</b>: the same task, with and without them, blind.</li>
   </ul>
+  <p class="mut"><a href="#niveis">Further on, the 6 levels for giving your agent skills</a>: from asking skill-creator to pruning with podar.py.</p>
   <p class="mut">Works with Claude Code and Codex. The map only reads; nothing changes without your yes.</p>
 </div></div></section>
 
@@ -427,7 +428,7 @@
         <p>You do the task once with the AI, correct it until it's good and ask to turn it into a skill. Skill Creator, Anthropic's official free skill, builds the folder. The name and description go at the top of the skill's main file, like the sign on a room door: the agent reads only the signs and goes in when the request matches. The kit includes a template for each type: procedure (writing a proposal), database (where the customer data is), artifact (brand colors and layout) and definition (what you mean by a word).</p>
         <p class="analogia"><b>Like in daily life:</b> you only write down the recipe after you get the dish right. And you file it in the right binder, not in a new notebook for each dinner.</p>
         <ul class="chips"><li>4 ready-made templates</li><li>the description says when to use it</li><li>the agent opens it only when needed</li></ul>
-        <p class="origem">Agent Skills is an open standard: launched by Anthropic on Oct 16, 2025, opened on Dec 18, 2025 and donated to the Agentic AI Foundation (Linux Foundation) in October 2026. A skill made for Claude works in Codex, Cursor and GitHub Copilot. <a href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" target="_blank" rel="noopener">Announcement</a> (in English).</p>
+        <p class="origem">Agent Skills is an open standard: launched by Anthropic on Oct 16, 2025, opened on Dec 18, 2025 and donated to the Agentic AI Foundation (Linux Foundation) in October 2026. A skill made for Claude usually works in other tools that adopted the standard (e.g., Codex, Cursor, GitHub Copilot). <a href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" target="_blank" rel="noopener">Announcement</a> (in English).</p>
       </div>
     </article>
     <article class="jeito-l">
@@ -628,20 +629,27 @@ I want to work with ONE main agent and many skills, instead of one agent folder 
 <!-- ========== OS 6 NÍVEIS ========== -->
 <section id="niveis"><div class="wrap">
   <p class="kicker">The 6 levels</p>
-  <h2>The agent is already smart. What it lacks is your way of working.</h2>
-  <p class="sub">Six ways to teach the agent your way, from the easiest to the most refined. Level 2 is the most recommended. Each one has its own file in the kit.</p>
+  <h2>Do you explain the same thing to the AI every week?</h2>
+  <p class="sub">The agent is already smart; what it lacks is your way of working. Six ways to teach it your way, from the easiest to the most refined. Level 2 is the most recommended. Each one has its own file in the kit.</p>
   <div class="tabela-wrap">
   <table class="tabela">
     <thead><tr><th>Level</th><th>What you do</th><th>In the kit</th></tr></thead>
     <tbody>
-      <tr><th>1. Ask Claude</th><td>Ask skill-creator, Anthropic's official skill for creating skills, to build your skill. Attach 2 or 3 of your own examples that worked well. In your general instructions, add one line: "always use skill-creator when I ask for a skill".</td><td>prompts/nivel1-peca-ao-claude.txt</td></tr>
-      <tr><th>2. Do it once</th><td>Do the task once with Claude and correct it as you would correct an intern. At the end, ask: "turn this session into a skill". Did a new rule come up? Ask it to update the skill.</td><td>prompts/faca-uma-vez.txt · email v1 → v2 in exemplos/seis-niveis</td></tr>
-      <tr><th>3. Record your screen</th><td>Record your screen while you do the task, and say what you are doing and why. Use Win+G on Windows or OBS, both free. Hand over the video, or the timestamped transcript, and ask for the skill.</td><td>prompts/nivel3-grave-a-tela.txt</td></tr>
-      <tr><th>4. LEGO bricks</th><td>Store your data, your brand and your definitions (what "priority client" means to you) once, in small skills. Your work skills use these bricks: if your logo changes, you change it in only one place.</td><td>marca, definicoes and proposta-curta in exemplos/seis-niveis</td></tr>
-      <tr><th>5. Other people's skills</th><td>The format is an open standard and usually works in several tools. Install only from sources you trust, and ask Claude to review the skill first: it may include a program.</td><td>prompts/conferir-skill-de-fora.txt</td></tr>
-      <tr><th>6. Pruning</th><td>From time to time, cut the steps, the "how to do it" that the new model already does on its own. Keep what it has no way of knowing: your data, your brand, your definitions and your corrections. Test before you cut.</td><td>podar.py + ab.py</td></tr>
+      <tr><th>1. Ask Claude</th><td>Ask skill-creator, Anthropic's official skill for creating skills, to build your skill. Attach 2 or 3 of your own examples that worked well. In your general instructions, add one line: "always use skill-creator when I ask for a skill". If it isn't installed, ask Claude to install it from Anthropic's official skills repository (github.com/anthropics/skills).</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/nivel1-peca-ao-claude.txt" target="_blank" rel="noopener">prompts/nivel1-peca-ao-claude.txt</a></td></tr>
+      <tr><th>2. Do it once</th><td>Do the task once with Claude and correct it as you would correct an intern. At the end, ask: "turn this session into a skill". Did a new rule come up? Ask it to update the skill.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/faca-uma-vez.txt" target="_blank" rel="noopener">prompts/faca-uma-vez.txt</a> · email v1 → v2 in <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis" target="_blank" rel="noopener">exemplos/seis-niveis</a></td></tr>
+      <tr><th>3. Record your screen</th><td>Record your screen while you do the task, and say what you are doing and why. Use Win+G on Windows or OBS, both free. Hand over the video, or the timestamped transcript, and ask for the skill.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/nivel3-grave-a-tela.txt" target="_blank" rel="noopener">prompts/nivel3-grave-a-tela.txt</a></td></tr>
+      <tr><th>4. LEGO bricks</th><td>Store your data, your brand and your definitions (what "priority client" means to you) once, in small skills. Your work skills use these bricks: if your logo changes, you change it in only one place.</td><td><a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis/marca" target="_blank" rel="noopener">marca</a>, <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis/definicoes" target="_blank" rel="noopener">definicoes</a> and <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis/proposta-curta" target="_blank" rel="noopener">proposta-curta</a> in <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis" target="_blank" rel="noopener">exemplos/seis-niveis</a></td></tr>
+      <tr><th>5. Other people's skills</th><td>The format is an open standard and usually works in several tools. Install only from sources you trust, and ask Claude to review the skill first: it may include a program.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/conferir-skill-de-fora.txt" target="_blank" rel="noopener">prompts/conferir-skill-de-fora.txt</a></td></tr>
+      <tr><th>6. Pruning</th><td>From time to time, cut the steps, the "how to do it" that the new model already does on its own. Keep what it has no way of knowing: your data, your brand, your definitions and your corrections. Test before you cut.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/podar.py" target="_blank" rel="noopener">podar.py</a> + <a href="https://github.com/inematds/um-agente-so/blob/main/ab.py" target="_blank" rel="noopener">ab.py</a></td></tr>
     </tbody>
   </table>
+  </div>
+  <p class="mut" style="margin-top:12px">The kit's prompts and examples are in Portuguese; ask your AI to translate them.</p>
+  <div class="pedido">
+    <div class="pedido-barra"><p>To run it on your skill (it only reads, it changes nothing). Replace &lt;your-skill&gt; with the folder name.</p>
+      <button class="btn" id="copiarPodar" type="button" data-ok="Command copied"><span>Copy command</span></button>
+    </div>
+<pre id="podarCmd">python3 podar.py ~/.claude/skills/&lt;your-skill&gt;/SKILL.md</pre>
   </div>
   <h3 class="ab-tit">Pruning an example skill written for an old model</h3>
   <p class="sub">We made a weekly report skill full of steps, the way people wrote for old models, and ran podar.py on it. It only reads: it does not change any file.</p>
@@ -782,6 +790,13 @@ dados, a marca, as definições e as correções.</pre>
     if(algum)requestAnimationFrame(loop);else rodando=false}
   kick();
 })();
+</script>
+<script>
+(function(){var b=document.getElementById("copiarPodar"),p=document.getElementById("podarCmd");if(!b||!p)return;
+ var s=b.querySelector("span"),o=s.textContent;b.addEventListener("click",function(){var a=document.createElement("textarea");a.value=p.textContent;
+ a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();var f=false;try{f=document.execCommand("copy");}catch(e){}
+ document.body.removeChild(a);if(!f&&navigator.clipboard){navigator.clipboard.writeText(p.textContent);f=true;}
+ if(f){s.textContent=b.getAttribute("data-ok");setTimeout(function(){s.textContent=o;},2500);}});})();
 </script>
 </body>
 </html>
