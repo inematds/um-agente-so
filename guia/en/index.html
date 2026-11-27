@@ -279,7 +279,7 @@
       <span class="marcao"><span class="forte">One <b>Agent Only</b></span> <span class="esp">one agent + many skills</span></span><span class="vh">: </span>
       <span class="manchete"><span class="l">You teach it once.</span> <span class="l">The agent saves it in a skill.</span> <span class="l"><em>Every task benefits.</em></span></span>
     </h1>
-    <p class="lead">You created an agent for each task, and now you fix the same rule in all of them. Paste one request into your AI: the kit counts your agents, helps you turn each task into a skill and blind-tests whether it still helps. In the end, you have one agent only, and it learns for all tasks at once.</p>
+    <p class="lead">You created an agent for each task, and now you fix the same rule in all of them. Paste one request into your AI: the kit counts your agents, helps you turn each task into a skill (a folder of instructions the agent opens when it needs it) and blind-tests whether it still helps. In the end, you have one agent only, and it learns for all tasks at once.</p>
   </div>
   <figure class="f2"><img src="../assets/banner-en.jpg" alt="One Agent Only: stop creating one agent per task. One general agent and many skills, as Anthropic recommends" width="1400" height="788"></figure>
   <div class="h-bot">
@@ -291,7 +291,7 @@
     </div>
     <ul class="fatos">
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Free and open kit. No coding: you paste a request, and nothing changes without your yes.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>You need Claude Code or Codex and a subscription to one of them.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>You need Claude Code or Codex and a subscription to one of them. Only use Claude on the website? The map can't see it there; see <a href="#q3">question 3</a>.</span></li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Measured on our machine: 525 agent folders and the same rule copied into as many as 73 of them.</span></li>
     </ul>
   </div>
@@ -395,7 +395,7 @@
         <p class="num">Part 1</p>
         <h3>Count your agents</h3>
         <p class="bom">To see how much you've created before touching it.</p>
-        <p>A small program with no AI counts your folders that have their own instructions (the CLAUDE.md or AGENTS.md file): each one is an "agent" you maintain separately. It lists skills by type, points out descriptions that are too short (the agent uses them to decide whether to open the skill) and finds the same rule copied into several folders.</p>
+        <p>A small program with no AI counts your folders that have their own instructions (the folder's rules file, CLAUDE.md or AGENTS.md): each one is an "agent" you maintain separately. It lists skills by type, points out descriptions that are too short (the agent uses them to decide whether to open the skill) and finds the same rule copied into several folders.</p>
         <p class="analogia"><b>Like in daily life:</b> before organizing a closet, you take everything out and count it. Then you find five identical pairs of scissors in five drawers.</p>
         <ul class="chips"><li>read-only</li><li>no AI, no internet</li><li>reads the Claude and Codex skill folders</li></ul>
         <p class="origem">The idea comes from Anthropic's talk "Don't Build Agents, Build Skills Instead" (Barry Zhang and Mahesh Murag, AI Engineer Code Summit 2025): what an agent lacks is expertise, not intelligence. <a href="https://www.ai.engineer/talks/agent-skills" target="_blank" rel="noopener">Talk</a> · <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener">Anthropic's post</a> (in English).</p>
@@ -423,7 +423,7 @@
         <p class="num">Part 2</p>
         <h3>Do it once, make it a skill</h3>
         <p class="bom">To teach a new task without creating another agent.</p>
-        <p>You do the task once with the AI, correct it until it's good and ask to turn it into a skill. Skill Creator, Anthropic's official free skill, builds the folder. The name and description go at the top of the main file (SKILL.md), like the sign on a room door: the agent reads only the signs and goes in when the request matches. The kit includes a template for each type: procedure (writing a proposal), database (where the customer data is), artifact (brand colors and layout) and definition (what you mean by a word).</p>
+        <p>You do the task once with the AI, correct it until it's good and ask to turn it into a skill. Skill Creator, Anthropic's official free skill, builds the folder. The name and description go at the top of the skill's main file, like the sign on a room door: the agent reads only the signs and goes in when the request matches. The kit includes a template for each type: procedure (writing a proposal), database (where the customer data is), artifact (brand colors and layout) and definition (what you mean by a word).</p>
         <p class="analogia"><b>Like in daily life:</b> you only write down the recipe after you get the dish right. And you file it in the right binder, not in a new notebook for each dinner.</p>
         <ul class="chips"><li>4 ready-made templates</li><li>the description says when to use it</li><li>the agent opens it only when needed</li></ul>
         <p class="origem">Agent Skills is an open standard: launched by Anthropic on Oct 16, 2025, opened on Dec 18, 2025 and donated to the Agentic AI Foundation (Linux Foundation) in October 2026. A skill made for Claude works in Codex, Cursor and GitHub Copilot. <a href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" target="_blank" rel="noopener">Announcement</a> (in English).</p>
@@ -450,10 +450,10 @@
         <p class="num">Part 3</p>
         <h3>Test without skills</h3>
         <p class="bom">To know whether a skill still helps or just takes up space.</p>
-        <p>The test runs the same task with your skills and with none. It removes only the skills; CLAUDE.md and hooks (automatic triggers) stay on in both runs. The responses become A and B by random draw; you pick the better one and only then reveal the key. A skill that wins stays; one that ties or loses, you rewrite or remove.</p>
+        <p>The test runs the same task with your skills and with none. It removes only the skills; the rules file and the automatic triggers stay on in both runs. The responses become A and B by random draw; you pick the better one and only then reveal the key. A skill that wins stays; one that ties or loses, you rewrite or remove.</p>
         <p class="analogia"><b>Like in daily life:</b> a taste test with no labels. You try both cups, choose, and only then see which one was the expensive brand.</p>
         <ul class="chips"><li>two responses from your subscription per task</li><li>runs on Claude Code</li><li>one task at a time</li></ul>
-        <p class="origem">For the Claude 5 models, Anthropic removed more than 80% of the Claude Code system prompt (its fixed instructions) with no measured loss, and saw that it was also "boxing in" the model with CLAUDE.md and skills. Boris Cherny, creator of Claude Code, recommends testing without these instructions from time to time. <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener">Article</a> (in English).</p>
+        <p class="origem">For the Claude 5 models, Anthropic removed more than 80% of the Claude Code system prompt (its fixed instructions) with no measured loss, and saw that it was also "boxing in" the model with rules files and skills. Boris Cherny, creator of Claude Code, recommends testing without these instructions from time to time. <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener">Article</a> (in English).</p>
       </div>
     </article>
   </div>
@@ -488,7 +488,7 @@
     </div>
     <div class="bloco">
       <h3>What they all repeat becomes one line</h3>
-      <p>Rules like "when I correct you, save the lesson" go to a single place, the main CLAUDE.md, and then apply to every task.</p>
+      <p>Rules like "when I correct you, save the lesson" go to a single place, the main rules file, and then apply to every task.</p>
       <p class="medido">On our machine, the most repeated rule was copied into 73 folders.</p>
     </div>
   </div>
@@ -514,7 +514,7 @@
   </div>
 
   <div class="questao" id="onde">
-  <h3 class="q-tit"><span>3</span>Does it work for claude.ai Projects or GPTs?</h3>
+  <h3 class="q-tit" id="q3"><span>3</span>Does it work for claude.ai Projects or GPTs?</h3>
   <p class="sub">Partly. The idea works anywhere, but the map only counts folders on your computer.</p>
   <figure class="largo m"><img src="../assets/q-onde.jpg" alt="A lit computer on the desk, while the cloud and browser icons stay dim, out of the light" loading="lazy" width="1200" height="800"></figure>
   <div class="duas">

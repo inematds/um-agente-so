@@ -281,7 +281,7 @@
       <span class="marcao"><span class="forte">Um <b>Agente Só</b></span> <span class="esp">um agente + muitas skills</span></span><span class="vh">: </span>
       <span class="manchete"><span class="l">Você ensina uma vez.</span> <span class="l">O agente guarda na skill.</span> <span class="l"><em>Toda tarefa aproveita.</em></span></span>
     </h1>
-    <p class="lead">Você criou um agente para cada tarefa e agora corrige a mesma regra em todos. Cole um pedido na sua IA: o kit conta os seus agentes, ajuda a transformar cada tarefa em skill e testa às cegas se ela ainda ajuda. No fim, um agente só, que aprende de uma vez.</p>
+    <p class="lead">Você criou um agente para cada tarefa e agora corrige a mesma regra em todos. Cole um pedido na sua IA: o kit conta os seus agentes, ajuda a transformar cada tarefa em skill (uma pasta de instruções que o agente abre quando precisa) e testa às cegas se ela ainda ajuda. No fim, um agente só, que aprende de uma vez.</p>
   </div>
   <figure class="f2"><img src="assets/banner.jpg" alt="Um Agente Só: pare de criar um agente por tarefa. Um agente geral e muitas skills, como recomenda a Anthropic" width="1400" height="788"></figure>
   <div class="h-bot">
@@ -293,7 +293,7 @@
     </div>
     <ul class="fatos">
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Kit grátis e aberto. Sem programar: você cola um pedido, e nada muda sem o seu sim.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Precisa do Claude Code ou do Codex e da assinatura de um deles.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Precisa do Claude Code ou do Codex e da assinatura de um deles. Usa o Claude só no site? O mapa não enxerga lá; veja a <a href="#q3">questão 3</a>.</span></li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Medido na nossa máquina: 525 pastas de agente e a mesma regra copiada em até 73 delas.</span></li>
     </ul>
   </div>
@@ -397,7 +397,7 @@
         <p class="num">Parte 1</p>
         <h3>Conte seus agentes</h3>
         <p class="bom">Para ver o tamanho do que você criou antes de mexer.</p>
-        <p>Um programinha sem IA conta as suas pastas com instruções próprias (o arquivo CLAUDE.md ou AGENTS.md): cada uma é um "agente" que você mantém à parte. Ele lista as skills por tipo, aponta as descrições curtas demais (é por elas que o agente decide abrir a skill) e acha a mesma regra copiada em várias pastas.</p>
+        <p>Um programinha sem IA conta as suas pastas com instruções próprias (o arquivo de regras da pasta, CLAUDE.md ou AGENTS.md): cada uma é um "agente" que você mantém à parte. Ele lista as skills por tipo, aponta as descrições curtas demais (é por elas que o agente decide abrir a skill) e acha a mesma regra copiada em várias pastas.</p>
         <p class="analogia"><b>Como no dia a dia:</b> antes de arrumar o armário, você tira tudo e conta. Aí descobre cinco tesouras iguais em cinco gavetas.</p>
         <ul class="chips"><li>só lê</li><li>sem IA, sem internet</li><li>lê as pastas de skills do Claude e do Codex</li></ul>
         <p class="origem">A ideia vem da palestra da Anthropic "Não crie agentes, crie skills" (Barry Zhang e Mahesh Murag, AI Engineer Code Summit 2025): o que falta ao agente é especialidade, não inteligência. <a href="https://www.ai.engineer/talks/agent-skills" target="_blank" rel="noopener">Palestra</a> · <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener">post da Anthropic</a> (em inglês).</p>
@@ -425,7 +425,7 @@
         <p class="num">Parte 2</p>
         <h3>Faça uma vez, vire skill</h3>
         <p class="bom">Para ensinar uma tarefa nova sem criar outro agente.</p>
-        <p>Você faz a tarefa uma vez com a IA, corrige até ficar bom e pede para virar skill. O Skill Creator, skill oficial e gratuita da Anthropic, monta a pasta. No topo do arquivo principal (SKILL.md) vão o nome e a descrição, como a etiqueta na porta de uma sala: o agente lê só as etiquetas e entra quando o pedido combina. O kit traz um modelo de cada tipo: procedimento (fazer uma proposta), banco (onde estão os dados dos clientes), artefato (cores e layout da marca) e definição (o que você quer dizer com uma palavra).</p>
+        <p>Você faz a tarefa uma vez com a IA, corrige até ficar bom e pede para virar skill. O Skill Creator, skill oficial e gratuita da Anthropic, monta a pasta. No topo do arquivo principal da skill vão o nome e a descrição, como a etiqueta na porta de uma sala: o agente lê só as etiquetas e entra quando o pedido combina. O kit traz um modelo de cada tipo: procedimento (fazer uma proposta), banco (onde estão os dados dos clientes), artefato (cores e layout da marca) e definição (o que você quer dizer com uma palavra).</p>
         <p class="analogia"><b>Como no dia a dia:</b> você só escreve a receita depois de acertar o prato. E guarda no fichário certo, não num caderno novo para cada jantar.</p>
         <ul class="chips"><li>4 modelos prontos</li><li>a descrição diz quando usar</li><li>o agente abre só quando precisa</li></ul>
         <p class="origem">Agent Skills é padrão aberto: lançado pela Anthropic em 16/10/2025, aberto em 18/12/2025 e doado à Agentic AI Foundation (Linux Foundation) em outubro de 2026. Skill feita para o Claude funciona no Codex, no Cursor e no GitHub Copilot. <a href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" target="_blank" rel="noopener">Anúncio</a> (em inglês).</p>
@@ -452,10 +452,10 @@
         <p class="num">Parte 3</p>
         <h3>Teste sem skills</h3>
         <p class="bom">Para saber se a skill ainda ajuda ou só ocupa espaço.</p>
-        <p>O teste roda a mesma tarefa com as suas skills e sem nenhuma. Ele tira só as skills; o CLAUDE.md e os hooks (gatilhos automáticos) seguem ligados nas duas rodadas. As respostas viram A e B por sorteio; você escolhe a melhor e só depois abre a chave. Skill que ganha fica; a que empata ou perde você reescreve ou tira.</p>
+        <p>O teste roda a mesma tarefa com as suas skills e sem nenhuma. Ele tira só as skills; o arquivo de regras e os gatilhos automáticos seguem ligados nas duas rodadas. As respostas viram A e B por sorteio; você escolhe a melhor e só depois abre a chave. Skill que ganha fica; a que empata ou perde você reescreve ou tira.</p>
         <p class="analogia"><b>Como no dia a dia:</b> um teste de sabor sem rótulo. Você prova os dois copos, escolhe, e só depois vê qual era a marca cara.</p>
         <ul class="chips"><li>duas respostas da sua assinatura por tarefa</li><li>roda no Claude Code</li><li>uma tarefa de cada vez</li></ul>
-        <p class="origem">Nos modelos Claude 5, a Anthropic tirou mais de 80% do prompt de sistema do Claude Code (as instruções fixas dele) sem perda medida, e viu que também "amarrava" o modelo com CLAUDE.md e skills. Boris Cherny, criador do Claude Code, recomenda testar de tempos em tempos sem essas instruções. <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener">Artigo</a> (em inglês).</p>
+        <p class="origem">Nos modelos Claude 5, a Anthropic tirou mais de 80% do prompt de sistema do Claude Code (as instruções fixas dele) sem perda medida, e viu que também "amarrava" o modelo com arquivos de regras e skills. Boris Cherny, criador do Claude Code, recomenda testar de tempos em tempos sem essas instruções. <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener">Artigo</a> (em inglês).</p>
       </div>
     </article>
   </div>
@@ -490,7 +490,7 @@
     </div>
     <div class="bloco">
       <h3>O que todos repetem vira uma linha</h3>
-      <p>Regras como "quando eu te corrigir, grave a lição" vão para um lugar só, o CLAUDE.md principal, e passam a valer em todas as tarefas.</p>
+      <p>Regras como "quando eu te corrigir, grave a lição" vão para um lugar só, o arquivo de regras principal, e passam a valer em todas as tarefas.</p>
       <p class="medido">Na nossa máquina, a regra mais repetida estava copiada em 73 pastas.</p>
     </div>
   </div>
@@ -516,7 +516,7 @@
   </div>
 
   <div class="questao" id="onde">
-  <h3 class="q-tit"><span>3</span>Serve para claude.ai Projects ou GPTs?</h3>
+  <h3 class="q-tit" id="q3"><span>3</span>Serve para claude.ai Projects ou GPTs?</h3>
   <p class="sub">Em parte. A ideia vale em qualquer lugar, mas o mapa só conta pastas no seu computador.</p>
   <figure class="largo m"><img src="assets/q-onde.jpg" alt="Computador iluminado na mesa, enquanto os ícones de nuvem e de navegador ficam apagados, fora da luz" loading="lazy" width="1200" height="800"></figure>
   <div class="duas">
