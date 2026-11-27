@@ -55,8 +55,13 @@ No hay versión en línea: el mapa necesita mirar las carpetas de tu ordenador. 
 
 Los prompts y los ejemplos del kit están en portugués; pídele a tu IA que los traduzca.
 
+Dos formas de ejecutarlo en tu skill (solo lee, no cambia nada).
+
+1. Pídele a tu agente: "ejecuta el podar.py del kit Um Agente Só en mi skill `<nombre>`".
+2. O ejecútalo tú, pero primero entra en la carpeta del kit. Cambia `<tu-skill>` por el nombre de la carpeta de la skill. En Codex, las skills están en `~/.codex/skills/`.
+
 ```bash
-python3 podar.py ~/.claude/skills/<tu-skill>/SKILL.md
+cd <carpeta del kit um-agente-so> && python3 podar.py ~/.claude/skills/<tu-skill>/SKILL.md
 ```
 
 `podar.py` solo lee: separa, en cada `SKILL.md`, lo que es paso (candidato a cortar) de lo que es contexto (guardar). Ejecutado en la skill inflada de ejemplo (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, salida congelada en [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
@@ -94,16 +99,18 @@ Saiu igual ou melhor sem os passos? Corte os passos e guarde os
 dados, a marca, as definições e as correções.
 ```
 
+`neutro (fora da conta)` (es decir, neutro, fuera de la cuenta) son las frases que no coinciden con ninguna regla; no entran en el porcentaje. En el comando de ab.py, cambia `<projeto>` por la carpeta donde trabajas con el agente.
+
 La prueba tiene la última palabra: ejecuta la misma tarea con y sin la skill en `ab.py`. Si el resultado sale igual o mejor sin los pasos, corta los pasos.
 
-Límite: las listas de palabras de `podar.py` están en portugués, para skills escritas en frases. Ejecutado en las 70 skills de esta máquina, terminó sin errores, pero en una skill en inglés o llena de código la mayor parte de las líneas cae en datos (cualquier número, ruta o nombre) o en neutro. Ahí solo sirve para encontrar los pasos obvios.
+Límite: las listas de palabras de `podar.py` están en portugués, para skills escritas en frases. Ejecutado en las 70 skills de `~/.claude/skills` de esta máquina (27/11/2026), terminó sin errores, pero en una skill en inglés o llena de código la mayor parte de las líneas cae en datos (cualquier número, ruta o nombre) o en neutro. Ahí solo sirve para encontrar los pasos obvios.
 
 ## La prueba (máquina de INEMA, 26/11/2026)
 
 | | |
 |---|---|
 | carpetas de agente (CLAUDE.md/AGENTS.md) | **525** |
-| skills instaladas | **119** (herramienta 61, procedimiento 28, artefacto 26, base 4) |
+| skills instaladas (en las carpetas `~/.claude/skills`, `~/.agents/skills` y `~/.codex/skills`, 26/11/2026) | **119** (herramienta 61, procedimiento 28, artefacto 26, base 4) |
 | skills con descripción demasiado corta | **51** |
 | la misma regla repetida | en **65 a 73** carpetas |
 
@@ -155,7 +162,7 @@ Opciones de `podar.py`: uno o más `SKILL.md` o carpetas, `--json`, `--max <n>` 
 | `prompts/faca-uma-vez.txt` (en portugués) | haz la tarea una vez con Claude y convierte la sesión en skill con skill-creator |
 | `prompts/conferir-skill-de-fora.txt` (en portugués) | antes de instalar una skill de terceros: qué hace, si accede a internet o a contraseñas, o si borra archivos |
 | `exemplos/seis-niveis/` | ejemplos de los niveles: e-mail v1 → v2 (correcciones acumuladas), marca + definiciones + propuesta que cita las dos (LEGO), una skill inflada y la salida de `podar.py` |
-| `exemplos/prova-real.md` (en portugués) | el kit ejecutado en la máquina de INEMA: 525 carpetas de agente, 119 skills, regla repetida en 73 carpetas, prueba A/B |
+| `exemplos/prova-real.md` (en portugués) | el kit ejecutado en la máquina de INEMA: 525 carpetas de agente, 119 skills instaladas en las carpetas `~/.claude/skills`, `~/.agents/skills` y `~/.codex/skills`, regla repetida en 73 carpetas, prueba A/B |
 | `guia/` | la guía PT/EN/ES (GitHub Pages) |
 
 ### Pruebas

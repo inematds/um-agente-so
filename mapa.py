@@ -20,7 +20,7 @@ import re
 import sys
 from pathlib import Path
 
-VERSAO = "0.2.1"
+VERSAO = "0.2.2"
 INSTRUCOES = ("CLAUDE.md", "AGENTS.md")
 PULAR = {".git", "node_modules", ".venv", "venv", "__pycache__", ".cache", ".npm", ".local",
          "snap", ".cargo", ".rustup", "go", "dist", "build", ".next", "site-packages"}

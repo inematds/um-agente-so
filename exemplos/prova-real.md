@@ -5,7 +5,7 @@
 `python3 mapa.py --raiz ~/projetos --profundidade 2`
 
 - **525 pastas com instruções próprias** (CLAUDE.md ou AGENTS.md) — 525 "agentes" que precisam ser mantidos um a um.
-- **119 skills instaladas**: ferramenta 61, procedimento 28, artefato 26, banco 4.
+- **119 skills instaladas** (nas pastas `~/.claude/skills`, `~/.agents/skills` e `~/.codex/skills`, que o mapa.py lê): ferramenta 61, procedimento 28, artefato 26, banco 4.
 - **51 skills com descrição curta demais** (< 40 letras). É pela descrição que o Claude decide se abre a skill.
 - A mesma regra repetida em **65 a 73 pastas** (ex.: "quando eu te corrigir, grave a lição", "autor dos commits"). Isso é uma linha global ou UMA skill, não 73 cópias.
 

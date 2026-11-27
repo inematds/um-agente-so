@@ -505,7 +505,7 @@
     <div class="bloco">
       <h3>El riesgo</h3>
       <p>Una skill de herramienta ejecuta programas en tu computadora. Si accede a internet, lee contraseñas o borra archivos, necesitas saberlo antes.</p>
-      <p class="medido">De nuestras 119 skills, 61 son de este tipo: traen un programa incluido.</p>
+      <p class="medido">De nuestras 119 skills (en las tres carpetas de skills, el 26/11/2026), 61 son de este tipo: incluyen un programa.</p>
     </div>
     <div class="bloco">
       <h3>Lo que hace el kit</h3>
@@ -606,7 +606,7 @@ Quiero trabajar con UN agente principal y muchas skills, en vez de una carpeta d
   <p class="sub">Antes de pedirte que lo hagas, lo hicimos. Números de nuestras carpetas al 26/11/2026.</p>
   <div class="numeros">
     <div class="numero"><b>525</b><span>carpetas de agente, cada una con sus instrucciones, para mantener una por una.</span></div>
-    <div class="numero"><b>119</b><span>skills: 61 de herramienta (traen un programa), 28 de procedimiento, 26 de artefacto y 4 de banco.</span></div>
+    <div class="numero"><b>119</b><span>skills: 61 de herramienta (traen un programa), 28 de procedimiento, 26 de artefacto y 4 de banco. Contadas por mapa.py en las carpetas de skills ~/.claude/skills, ~/.agents/skills y ~/.codex/skills, el 26/11/2026.</span></div>
     <div class="numero"><b>73</b><span>carpetas con la misma regla copiada (la más repetida; otras aparecen en 65). Debería ser una sola línea.</span></div>
     <div class="numero"><b>51</b><span>skills con la descripción demasiado corta, de menos de 40 letras.</span></div>
   </div>
@@ -639,17 +639,22 @@ Quiero trabajar con UN agente principal y muchas skills, en vez de una carpeta d
       <tr><th>2. Hazlo una vez</th><td>Haz la tarea una vez con Claude y corrígelo como corregirías a un practicante. Al final, pide: "convierte esta sesión en una skill". ¿Apareció una regla nueva? Pide que actualice la skill.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/faca-uma-vez.txt" target="_blank" rel="noopener">prompts/faca-uma-vez.txt</a> · e-mail v1 → v2 en <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis" target="_blank" rel="noopener">exemplos/seis-niveis</a></td></tr>
       <tr><th>3. Graba la pantalla</th><td>Graba la pantalla mientras haces la tarea y di en voz alta qué haces y por qué. Win+G en Windows u OBS, los dos gratis. Entrega el video, o la transcripción con los tiempos, y pide la skill.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/nivel3-grave-a-tela.txt" target="_blank" rel="noopener">prompts/nivel3-grave-a-tela.txt</a></td></tr>
       <tr><th>4. Piezas de LEGO</th><td>Guarda una sola vez, en skills pequeñas, tus datos, tu marca y tus definiciones (qué es un "cliente prioritario" para ti). Las skills de trabajo usan esas piezas: si cambia el logo, lo cambias en un solo lugar.</td><td><a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis/marca" target="_blank" rel="noopener">marca</a>, <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis/definicoes" target="_blank" rel="noopener">definicoes</a> y <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis/proposta-curta" target="_blank" rel="noopener">proposta-curta</a> en <a href="https://github.com/inematds/um-agente-so/tree/main/exemplos/seis-niveis" target="_blank" rel="noopener">exemplos/seis-niveis</a></td></tr>
-      <tr><th>5. Skills de otros</th><td>El formato es un estándar abierto y suele funcionar en varias herramientas. Instala solo desde fuentes de confianza y antes pide a Claude que revise la skill: puede traer un programa.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/conferir-skill-de-fora.txt" target="_blank" rel="noopener">prompts/conferir-skill-de-fora.txt</a></td></tr>
+      <tr><th>5. Skills de otros</th><td>El formato es un estándar abierto (<a href="https://agentskills.io" target="_blank" rel="noopener">agentskills.io</a>) y suele funcionar en varias herramientas. Instala solo desde fuentes de confianza y antes pide a Claude que revise la skill: puede traer un programa.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/prompts/conferir-skill-de-fora.txt" target="_blank" rel="noopener">prompts/conferir-skill-de-fora.txt</a></td></tr>
       <tr><th>6. Poda</th><td>Cada cierto tiempo, corta los pasos, ese "cómo hacerlo" que el modelo nuevo ya hace solo. Conserva lo que no tiene forma de saber: tus datos, tu marca, tus definiciones y tus correcciones. Prueba antes de cortar.</td><td><a href="https://github.com/inematds/um-agente-so/blob/main/podar.py" target="_blank" rel="noopener">podar.py</a> + <a href="https://github.com/inematds/um-agente-so/blob/main/ab.py" target="_blank" rel="noopener">ab.py</a></td></tr>
     </tbody>
   </table>
   </div>
   <p class="mut" style="margin-top:12px">Los prompts y los ejemplos del kit están en portugués; pídele a tu IA que los traduzca.</p>
+  <p class="sub">Dos formas de ejecutarlo en tu skill (solo lee, no cambia nada).</p>
+  <ol class="tres">
+    <li><p>Pídele a tu agente: "ejecuta el podar.py del kit Um Agente Só en mi skill &lt;nombre&gt;".</p></li>
+    <li><p>O ejecútalo tú, pero primero entra en la carpeta del kit. Cambia &lt;tu-skill&gt; por el nombre de la carpeta de la skill. En Codex, las skills están en ~/.codex/skills/.</p></li>
+  </ol>
   <div class="pedido">
-    <div class="pedido-barra"><p>Para ejecutarlo en tu skill (solo lee, no cambia nada). Reemplaza &lt;tu-skill&gt; por el nombre de la carpeta.</p>
+    <div class="pedido-barra">
       <button class="btn" id="copiarPodar" type="button" data-ok="Comando copiado"><span>Copiar el comando</span></button>
     </div>
-<pre id="podarCmd">python3 podar.py ~/.claude/skills/&lt;tu-skill&gt;/SKILL.md</pre>
+<pre id="podarCmd">cd &lt;carpeta del kit um-agente-so&gt; &amp;&amp; python3 podar.py ~/.claude/skills/&lt;tu-skill&gt;/SKILL.md</pre>
   </div>
   <h3 class="ab-tit">La poda, en una skill de ejemplo escrita para un modelo antiguo</h3>
   <p class="sub">Hicimos una skill de informe semanal llena de pasos, como se escribía para los modelos antiguos, y le pasamos podar.py. Solo lee: no cambia ningún archivo.</p>
@@ -686,7 +691,9 @@ a skill (python3 ab.py "&lt;tarefa&gt;" --pasta &lt;projeto&gt;) e compare.
 Saiu igual ou melhor sem os passos? Corte os passos e guarde os
 dados, a marca, as definições e as correções.</pre>
   </div>
+  <p class="mut" style="margin-top:12px">"neutro (fora da conta)" (es decir, neutro, fuera de la cuenta) son las frases que no coinciden con ninguna regla; no entran en el porcentaje. En el comando de ab.py, cambia &lt;projeto&gt; por la carpeta donde trabajas con el agente.</p>
   <p class="sub">21 de las 27 líneas son pasos: candidatas a salir. De las 6 que quedan, 5 son lo que el modelo no tiene forma de saber: dónde está la hoja de cálculo de la semana, a quién enviar el informe, qué es un "pedido detenido", qué no mostrar nunca y los colores del gráfico. La sexta, "evite enrolação" (evita el relleno), entró como corrección solo por la palabra "evite" (evita). podar.py es una lista de palabras, no un juez: la última palabra la tiene la prueba a ciegas, la misma tarea con y sin la skill. ¿Salió igual o mejor sin los pasos? Corta los pasos.</p>
+  <p class="mut" style="margin-top:12px">Límite: las listas de palabras de podar.py están en portugués. En una skill escrita en inglés o español, solo encuentra los pasos obvios.</p>
 </div></section>
 <!-- ========== PERGUNTAS ========== -->
 <section id="perguntas"><div class="wrap"><div class="col">

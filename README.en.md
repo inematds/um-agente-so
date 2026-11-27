@@ -55,8 +55,13 @@ Do you explain the same thing to the AI every week? The agent is already smart; 
 
 The kit's prompts and examples are in Portuguese; ask your AI to translate them.
 
+Two ways to run it on your skill (it only reads and changes nothing).
+
+1. Ask your agent: "run podar.py from the Um Agente Só kit on my skill `<name>`".
+2. Or run it yourself. First, go into the kit folder. Replace `<your-skill>` with the name of the skill folder. In Codex, skills live in `~/.codex/skills/`.
+
 ```bash
-python3 podar.py ~/.claude/skills/<your-skill>/SKILL.md
+cd <um-agente-so kit folder> && python3 podar.py ~/.claude/skills/<your-skill>/SKILL.md
 ```
 
 `podar.py` only reads: in each `SKILL.md`, it separates steps (candidates to cut) from context (keep). Here it is, run on the bloated example skill (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, frozen output in [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
@@ -94,16 +99,18 @@ Saiu igual ou melhor sem os passos? Corte os passos e guarde os
 dados, a marca, as definições e as correções.
 ```
 
+`neutro (fora da conta)` means "neutral (not counted)": these are the sentences that match no rule. The percentage leaves them out. In the ab.py command, replace `<projeto>` with the folder where you work with the agent.
+
 The test has the final word: run the same task with and without the skill in `ab.py`. If the result is the same or better without the steps, cut the steps.
 
-Limit: the word lists in `podar.py` are in Portuguese, for skills written in sentences. Run on the 70 skills on this machine, it finished without errors, but in skills written in English or full of code, most lines fall into data (any number, path or name) or neutral. There it only helps find the obvious steps.
+Limit: the word lists in `podar.py` are in Portuguese, for skills written in sentences. Run on the 70 skills in `~/.claude/skills` on this machine (27/11/2026), it finished without errors, but in skills written in English or full of code, most lines fall into data (any number, path or name) or neutral. There it only helps find the obvious steps.
 
 ## The proof (INEMA machine, 26/11/2026)
 
 | | |
 |---|---|
 | agent folders (CLAUDE.md/AGENTS.md) | **525** |
-| installed skills | **119** (tool 61, procedure 28, artifact 26, database 4) |
+| installed skills (in the folders `~/.claude/skills`, `~/.agents/skills` and `~/.codex/skills`, 26/11/2026) | **119** (tool 61, procedure 28, artifact 26, database 4) |
 | skills with a description that is too short | **51** |
 | same rule repeated | in **65 to 73** folders |
 
@@ -155,7 +162,7 @@ python3 podar.py ~/.claude/skills --json          # all skills in the folder, as
 | `prompts/faca-uma-vez.txt` (in Portuguese) | do the task once with Claude and turn the session into a skill with skill-creator |
 | `prompts/conferir-skill-de-fora.txt` (in Portuguese) | before installing a third-party skill: what it does, whether it accesses the internet or passwords, or deletes files |
 | `exemplos/seis-niveis/` | examples of the levels: email v1 → v2 (accumulated corrections), brand + definitions + a proposal that cites both (LEGO), a bloated skill, and the output of `podar.py` |
-| `exemplos/prova-real.md` (in Portuguese) | the kit run on the INEMA machine: 525 agent folders, 119 skills, a rule repeated in 73 folders, A/B test |
+| `exemplos/prova-real.md` (in Portuguese) | the kit run on the INEMA machine: 525 agent folders, 119 skills installed in the folders `~/.claude/skills`, `~/.agents/skills` and `~/.codex/skills`, a rule repeated in 73 folders, A/B test |
 | `guia/` | the PT/EN/ES guide (GitHub Pages) |
 
 ### Tests

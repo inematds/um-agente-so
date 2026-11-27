@@ -53,8 +53,13 @@ Você explica a mesma coisa para a IA toda semana? O agente já é inteligente; 
 | 5 | Use skills de outros: o formato é um padrão aberto ([agentskills.io](https://agentskills.io)) e costuma funcionar em várias ferramentas. Só de fonte de confiança, e peça ao Claude para revisar antes. | [`prompts/conferir-skill-de-fora.txt`](prompts/conferir-skill-de-fora.txt) |
 | 6 | Faça a poda de tempos em tempos. Corte os PASSOS (o "como fazer", que o modelo novo faz sozinho) e guarde o que ele não tem como saber: seus dados, sua marca, suas definições e suas correções. Teste antes de cortar. | [`podar.py`](podar.py) + [`ab.py`](ab.py) |
 
+Duas formas de rodar na sua skill (ele só lê, não muda nada).
+
+1. Peça ao seu agente: "rode o podar.py do kit Um Agente Só na minha skill `<nome>`".
+2. Ou rode você mesmo, entrando antes na pasta do kit. Troque `<sua-skill>` pelo nome da pasta da skill. No Codex, as skills ficam em `~/.codex/skills/`.
+
 ```bash
-python3 podar.py ~/.claude/skills/<sua-skill>/SKILL.md
+cd <pasta do kit um-agente-so> && python3 podar.py ~/.claude/skills/<sua-skill>/SKILL.md
 ```
 
 O `podar.py` só lê: separa, em cada `SKILL.md`, o que é passo (candidato a cortar) do que é contexto (guardar). Rodado na skill inchada de exemplo (`python3 podar.py exemplos/seis-niveis/relatorio-inchado/SKILL.md`, saída congelada em [`exemplos/seis-niveis/saida-podar.txt`](exemplos/seis-niveis/saida-podar.txt)):
@@ -92,16 +97,18 @@ Saiu igual ou melhor sem os passos? Corte os passos e guarde os
 dados, a marca, as definições e as correções.
 ```
 
+`neutro (fora da conta)` são as frases que não batem com nenhuma regra; elas não entram na porcentagem. No comando do ab.py, troque `<projeto>` pela pasta onde você trabalha com o agente.
+
 A palavra final é do teste: rode a mesma tarefa com e sem a skill no `ab.py`. Saiu igual ou melhor sem os passos, corte os passos.
 
-Limite: as listas de palavras do `podar.py` são em português, para skill escrita em frases. Rodado nas 70 skills desta máquina, terminou sem erro, mas em skill em inglês ou cheia de código a maior parte das linhas cai em dados (qualquer número, caminho ou nome) ou em neutro. Ali ele serve só para achar os passos óbvios.
+Limite: as listas de palavras do `podar.py` são em português, para skill escrita em frases. Rodado nas 70 skills de `~/.claude/skills` desta máquina (27/11/2026), terminou sem erro, mas em skill em inglês ou cheia de código a maior parte das linhas cai em dados (qualquer número, caminho ou nome) ou em neutro. Ali ele serve só para achar os passos óbvios.
 
 ## A prova (máquina do INEMA, 26/11/2026)
 
 | | |
 |---|---|
 | pastas de agente (CLAUDE.md/AGENTS.md) | **525** |
-| skills instaladas | **119** (ferramenta 61, procedimento 28, artefato 26, banco 4) |
+| skills instaladas (nas pastas `~/.claude/skills`, `~/.agents/skills` e `~/.codex/skills`, 26/11/2026) | **119** (ferramenta 61, procedimento 28, artefato 26, banco 4) |
 | skills com descrição curta demais | **51** |
 | mesma regra repetida | em **65 a 73** pastas |
 
@@ -153,7 +160,7 @@ Opções do `podar.py`: um ou mais `SKILL.md` ou pastas, `--json`, `--max <n>` (
 | `prompts/faca-uma-vez.txt` | faça a tarefa uma vez com o Claude e transforme a sessão em skill com o skill-creator |
 | `prompts/conferir-skill-de-fora.txt` | antes de instalar skill de terceiros: o que ela faz, se acessa internet, senhas ou apaga arquivos |
 | `exemplos/seis-niveis/` | exemplos dos níveis: e-mail v1 → v2 (correções acumuladas), marca + definições + proposta que cita as duas (LEGO), uma skill inchada e a saída do `podar.py` |
-| `exemplos/prova-real.md` | o kit rodado na máquina do INEMA: 525 pastas de agente, 119 skills, regra repetida em 73 pastas, teste A/B |
+| `exemplos/prova-real.md` | o kit rodado na máquina do INEMA: 525 pastas de agente, 119 skills instaladas nas pastas `~/.claude/skills`, `~/.agents/skills` e `~/.codex/skills`, regra repetida em 73 pastas, teste A/B |
 | `guia/` | o guia PT/EN/ES (GitHub Pages) |
 
 ### Testes

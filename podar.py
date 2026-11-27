@@ -49,7 +49,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-VERSAO = "0.2.1"
+VERSAO = "0.2.2"
 
 GUARDAR = ("correção", "definição", "marca", "dados")
 
